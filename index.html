@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="nl-BE">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="Prototype voor een eenvoudige en moderne Tax-on-Web interface">
+    <meta name="author" content="Jens Vannitsen & Reinaert Van de Cruys">
+    <link rel="icon" href="img/favicon.ico">
+
+    <title>Tax-on-Web</title>
+
+    <link rel="stylesheet" href="styles/lib/bootstrap-3.3.7.min.css">
+    <link rel="stylesheet" href="styles/lib/ie10-viewport-bug-workaround.css">
+
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+
+<!-- Navigation bar -->
+<nav id="navbar" class="navbar navbar-default navbar-static-top"><div class="container-fluid">
+
+    <!-- Logo -->
+    <div id="logo" class="navbar-header"><a class="navbar-brand" href="#"><img alt="Tax-on-Web logo" src="img/logo.png"></a></div>
+
+    <!-- Synchronization state -->
+    <span id="sync-state" class="navbar-text"></span>
+
+    <!-- User elements -->
+    <ul id="user-elements" class="nav navbar-nav navbar-right">
+
+        <!-- User names -->
+        <li id="user-names"></li>
+
+        <!-- Options menu -->
+        <li id="options-menu" class="dropdown">
+
+            <!-- Options button -->
+            <a id="options-button" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" aria-label="Opties">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                <span class="caret"></span>
+            </a>
+
+            <!-- Options menu contents -->
+            <ul id="options-menu-content" class="dropdown-menu" aria-labelledby="options-button">
+                <li><a href="#"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>Opnieuw beginnen</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>Geavanceerde weergave</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>Help</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>Afsluiten</a></li>
+            </ul>
+
+        </li> <!-- /Options menu -->
+
+    </ul> <!-- /User elements -->
+
+</div></nav> <!-- /Navigation bar -->
+
+<!-- Main content -->
+<main id="main" class="container">
+
+    <!-- Steps (based on https://github.com/join) -->
+    <ol id="steps" class="row">
+        <li class="col-xs-4">
+            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+            <strong class="step-counter">Stap 1:</strong>
+            <div>Aangifte invullen</div>
+        </li>
+        <li class="col-xs-4">
+            <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+            <strong class="step-counter">Stap 2:</strong>
+            <div>Bijlagen toevoegen</div>
+        </li>
+        <li class="col-xs-4">
+            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+            <strong class="step-counter">Stap 3:</strong>
+            <div>Ondertekenen</div>
+        </li>
+    </ol>
+
+    <!-- Progress bar -->
+    <div id="progress-bar" class="progress">
+        <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+            <span class="sr-only"></span>
+        </div>
+    </div>
+
+    <!-- Actual content -->
+    <div id="content"><span class="question">Heeft u openstaande leningen die in 2005 of vroeger aangegaan zijn?</span></div>
+
+    <!-- Action buttons -->
+    <div id="action-buttons" class="row">
+        <span class="col-xs-3"><button class="btn btn-default btn-lg">Vorige</button></span>
+        <span class="col-xs-3"><button class="btn btn-primary btn-lg">Ja</button></span>
+        <span class="col-xs-3"><button class="btn btn-primary btn-lg">Nee</button></span>
+        <span class="col-xs-3"><button class="btn btn-default btn-lg">Overslaan</button></span>
+    </div>
+
+</main> <!-- /Main content -->
+
+<script src="scripts/lib/jquery-3.1.1.min.js"></script>
+<script src="scripts/lib/bootstrap-3.3.7.min.js"></script>
+<script src="scripts/lib/ie10-viewport-bug-workaround.js"></script>
+
+<script src="scripts/main.js"></script>
+</body>
+</html>

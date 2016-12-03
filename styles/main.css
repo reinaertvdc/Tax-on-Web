@@ -1,0 +1,170 @@
+/*/
+ * Let the main content fill any remaining height after the other elements have
+ * taken what they need
+/*/
+
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex-grow: 1;
+}
+
+/*/
+ * Style the navigation bar
+/*/
+
+#navbar {
+    height: 50px;
+    margin-bottom: 32px;
+}
+
+/*/
+ * Style the logo
+/*/
+
+#logo a {
+    padding: 10px 15px;
+}
+
+#logo img {
+    height: 100%;
+}
+
+/*/
+ * Style the user names
+/*/
+
+#user-names {
+    padding: 5px 15px;
+}
+
+#user-names span {
+    margin: 0;
+    clear: both;
+    float: right;
+}
+
+#user-names span:only-child {
+    line-height: 40px;
+}
+
+/*/
+ * Style the options menu
+/*/
+
+#options-menu-content .glyphicon {
+    margin-right: 20px;
+}
+
+/*/
+ * Style the steps (based on https://github.com/join)
+/*/
+
+#steps {
+    padding: 0 15px;
+}
+
+#steps li {
+    background-color: #fafafa;
+    color: #ccc;
+
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+
+    list-style: none;
+}
+
+#steps li:first-of-type {
+    border-right-width: 0;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+#steps li:last-of-type {
+    border-left-width: 0;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+#steps .glyphicon {
+    font-size: 24px;
+    margin-right: 12px;
+    vertical-align: top;
+}
+
+#steps div {
+    margin-left: 40px;
+}
+
+#steps li.current {
+    color: inherit;
+    background-color: inherit;
+}
+
+#steps li.current .glyphicon {
+    color: #4078c0;
+}
+
+/*/
+ * Style the progress bar
+/*/
+
+#progress-bar {
+    min-height: 20px;
+    margin: 0;
+}
+
+/*/
+ * Let the 'actual content' fill any remaining height after the other elements
+ * have taken what they need
+/*/
+
+main {
+    display: flex;
+    flex-direction: column;
+}
+
+#content {
+    flex-grow: 1;
+    flex-shrink: 0;
+}
+
+/*/
+ * Style the 'actual content'
+/*/
+
+#content {
+    margin: 64px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/*/
+ * Style the questions
+/*/
+
+.question {
+    display: block;
+    font-size: 36px;
+    text-align: center;
+    margin: auto 0;
+}
+
+/*/
+ * Style the action buttons
+/*/
+
+#action-buttons span {
+    padding: 0 15px 64px;
+}
+
+#action-buttons button {
+    width: 100%;
+}
