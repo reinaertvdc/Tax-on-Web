@@ -22,7 +22,6 @@ var completed = [];
 
 /* Update the page to match the current state of the tax return */
 function renderPage() {
-    var content = $('#content');
     var question;
 
     if (flow.length > 0) {
@@ -32,8 +31,7 @@ function renderPage() {
     }
 
     UI.setProgress(completed.length / (flow.length + completed.length));
-    content.empty();
-    content.append('<span class="question">' + question + '</span>');
+    UI.Content.setQuestion(question);
 }
 
 

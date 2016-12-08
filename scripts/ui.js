@@ -1,5 +1,6 @@
 /* Define a UI object to hold static UI methods */
-function UI() {}
+function UI() {
+}
 
 
 /* Set the conveyed synchronization state */
@@ -71,4 +72,17 @@ UI.setProgress = function (fraction) {
     } else {
         return false;
     }
+};
+
+
+/* Define a Content object within the UI object to hold static methods that operate on the actual content */
+UI.Content = function () {
+};
+
+
+/* Set the content to the given question */
+UI.Content.setQuestion = function (value) {
+    var content = $('#content');
+    content.empty();
+    content.append('<span class="question">' + value + '</span>');
 };
