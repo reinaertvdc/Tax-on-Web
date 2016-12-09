@@ -106,6 +106,11 @@ function setNextStep(){
 
 }
 
+function updateComment(index, value){
+    console.log("value changed to " + value);
+    attachments[index][1] = value;
+}
+
 function removeAttachment(index) {
     attachments.splice(index, 1);
     renderAttachments();

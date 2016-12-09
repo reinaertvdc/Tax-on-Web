@@ -88,9 +88,9 @@ UI.Content.setAttachments = function (value){
             '<div class="col-sm-4 filenameContainer"><label class="filename">'+ rowValues[0] + '</label></div>';
 
         if(rowValues[1] != "")
-            rowContent += '<div class="col-sm-6"><input type="text" class="form-control" value="' + rowValues[2] + '"></div>';
+            rowContent += '<div class="col-sm-6"><input type="text" class="form-control" onblur="updateComment(' + j + ', this.value)" value="' + rowValues[1] + '"></div>';
         else
-            rowContent += '<div class="col-sm-6"><input type="text" class="form-control" value=""></div>';
+            rowContent += '<div class="col-sm-6"><input type="text" class="form-control" onblur="updateComment(' + j + ', this.value)" value=""></div>';
 
         rowContent += '<div class="col-sm-2"><button id="action-button-remove" class="btn btn-default removeButton" onclick="removeAttachment(' + j + ')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>Verwijder</button></div></div>';
         attachments.append(rowContent);
