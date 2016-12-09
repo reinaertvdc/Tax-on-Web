@@ -95,19 +95,38 @@ function setNextStep(){
         '<span class="col-xs-8"><label class="btn btn-primary btn-file"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Toevoegen <input id="file" accept="application/pdf" type="file" multiple style="display: none;"> </label></span>' +
         '<span class="col-xs-4"><button id="action-button-removeAll" class="btn btn-primary"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>verwijder alle</button></span>' +
     '</div>');
+    
+    $('#action-button-removeAll')[0].addEventListener('click', function () {
+        removeAllAttachments();
+    });
+    
     $('#file')[0].addEventListener('change', function () {
         addFile();
     });
 
 }
 
+function removeAttachment(index) {
+    attachments.splice(index, 1);
+    renderAttachments();
+}
+
+/* remove all attachments */
+function removeAllAttachments() {
+    attachments = [];
+    renderAttachments();
+}
+
+/* get all files from input and save the names in attachment array */
 function addFile(){
     var fileArray = $("#file").prop("files");
-    console.log(fileArray);
     for (var i = 0; i < fileArray.length; ++i) {
         var filename = fileArray.item(i).name.replace(/^.*[\\\/]/, '');
+
+        /* add tupple [filename, comment] */
         attachments.push([filename, ""]);
     }
+    $("#file").val("");
     renderAttachments();
 }
 

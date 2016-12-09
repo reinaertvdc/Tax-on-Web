@@ -92,8 +92,7 @@ UI.Content.setAttachments = function (value){
         else
             rowContent += '<div class="col-sm-6"><input type="text" class="form-control" value=""></div>';
 
-        rowContent += '<div class="col-sm-2"><button id="action-button-remove" class="btn btn-default removeButton"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>Verwijder</button></div></div>';
-
+        rowContent += '<div class="col-sm-2"><button id="action-button-remove" class="btn btn-default removeButton" onclick="removeAttachment(' + j + ')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>Verwijder</button></div></div>';
         attachments.append(rowContent);
     }
 };  
@@ -111,3 +110,4 @@ UI.Content.setQuestion = function (value) {
     content.empty();
     content.append('<span class="question">' + value + '</span>');
 };
+
