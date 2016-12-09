@@ -23,6 +23,7 @@ main {
 #navbar {
     height: 50px;
     margin-bottom: 32px;
+    display: block;
 }
 
 /*/
@@ -69,6 +70,7 @@ main {
 
 #steps {
     padding: 0 15px;
+    display: block;
 }
 
 #steps li {
@@ -167,4 +169,39 @@ main {
 
 #action-buttons button {
     width: 100%;
+}
+
+#buttons {
+     margin-top: 2rem;
+ }
+
+#buttons span, button{
+    height: 100%;
+}
+
+#action-button-removeAll {
+    float: right;
+}
+
+.filenameContainer {
+    overflow: hidden;
+    margin: auto;
+}
+
+#attachmentHeaders{
+    margin-bottom: 2rem;
+}
+
+.filename {
+    margin: 0 0 0 0;
+}
+
+.row {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.removeButton{
+    float: right;
 }

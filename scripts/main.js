@@ -44,8 +44,7 @@ function renderPage() {
 
 /* Update page to match the additional attachments*/
 function renderAttachments(){
-    
-
+    $('#attachments').empty();
     UI.Content.setAttachments(attachments);
 }
 
@@ -84,9 +83,33 @@ function setNextStep(){
     UI.setCurrentStep(currentStep);
     var content = $('#content');
     content.empty();
+    content.append(
+                '<div class="row" id="attachmentHeaders">' +
+        '<div class="col-sm-4"><label>Bestandsnaam</label></div>' +
+        '<div class="col-sm-6"><label>Commentaar</label></div>' +
+        '<div class="col-sm-2"><br></div>' +
+        '</div><div id="attachments"></div>');
+
+    content.append(
+    '<div id="buttons" class="row">' +
+        '<span class="col-xs-8"><label class="btn btn-primary btn-file"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Toevoegen <input id="file" accept="application/pdf" type="file" multiple style="display: none;"> </label></span>' +
+        '<span class="col-xs-4"><button id="action-button-removeAll" class="btn btn-primary"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>verwijder alle</button></span>' +
+    '</div>');
+    $('#file')[0].addEventListener('change', function () {
+        addFile();
+    });
 
 }
 
+function addFile(){
+    var fileArray = $("#file").prop("files");
+    console.log(fileArray);
+    for (var i = 0; i < fileArray.length; ++i) {
+        var filename = fileArray.item(i).name.replace(/^.*[\\\/]/, '');
+        attachments.push([filename, ""]);
+    }
+    renderAttachments();
+}
 
 $('#action-button-previous')[0].addEventListener('click', function () {
     previousPage();

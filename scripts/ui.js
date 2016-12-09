@@ -81,7 +81,21 @@ UI.Content = function () {
 
 /* Set the additional attachments*/
 UI.Content.setAttachments = function (value){
-    
+    var attachments = $('#attachments');
+    for(var j = 0; j < value.length; j++){
+        var rowValues = value[j];
+        var rowContent = '<div class="row">' +
+            '<div class="col-sm-4 filenameContainer"><label class="filename">'+ rowValues[0] + '</label></div>';
+
+        if(rowValues[1] != "")
+            rowContent += '<div class="col-sm-6"><input type="text" class="form-control" value="' + rowValues[2] + '"></div>';
+        else
+            rowContent += '<div class="col-sm-6"><input type="text" class="form-control" value=""></div>';
+
+        rowContent += '<div class="col-sm-2"><button id="action-button-remove" class="btn btn-default removeButton"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>Verwijder</button></div></div>';
+
+        attachments.append(rowContent);
+    }
 };  
 
 UI.Content.setNextButton = function(){
