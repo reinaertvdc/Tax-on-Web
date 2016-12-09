@@ -32,10 +32,15 @@ function renderPage() {
         question = flow[0];
     } else {
         question = 'Klaar!';
-        UI.Content.setNextButton();
+        UI.Content.setNextPrevButton();
+
         $('#action-button-next')[0].addEventListener('click', function () {
-            setNextStep();
+            ChangeStep(1);
         });
+        $('#action-button-previous')[0].addEventListener('click', function () {
+            ChangeStep(-1);
+        });
+        $('#action-button-previous').prop('disabled',true);
     }
 
     UI.setProgress(completed.length / (flow.length + completed.length));
@@ -58,7 +63,6 @@ function previousPage() {
     }
 }
 
-
 /* Mark the current page as solved and go to the next page */
 function nextPage() {
     if (flow.length > 0) {
@@ -67,7 +71,6 @@ function nextPage() {
         renderPage();
     }
 }
-
 
 /* Jump to the next page without resolving the current page */
 function skipPage() {
@@ -78,33 +81,76 @@ function skipPage() {
     }
 }
 
-function setNextStep(){
-    currentStep++;
+function ChangeStep(value){
+    currentStep += value;
     UI.setCurrentStep(currentStep);
     var content = $('#content');
     content.empty();
+
+    if(currentStep == 1)
+        setupQuestions(content);
+    else if(currentStep == 2) {
+        $('#action-button-previous').prop('disabled', false);
+        setupAttachmentStep(content);
+    }else if(currentStep == 3) {
+        setupSign(content);
+    }
+
+}
+
+function setupQuestions(content){
+    $('#action-buttons').append(
+       ' <span class="col-xs-3"><button id="action-button-previous" class="btn btn-default btn-lg">Vorige</button></span>' +
+        '<span class="col-xs-3"><button id="action-button-yes" class="btn btn-primary btn-lg">Ja</button></span>' +
+        '<span class="col-xs-3"><button id="action-button-no" class="btn btn-primary btn-lg">Nee</button></span>' +
+        '<span class="col-xs-3"><button id="action-button-skip" class="btn btn-default btn-lg">Overslaan</button></span>')
+
+    $('#action-button-previous')[0].addEventListener('click', function () {
+        previousPage();
+    });
+
+    $('#action-button-yes')[0].addEventListener('click', function () {
+        nextPage();
+    });
+
+    $('#action-button-no')[0].addEventListener('click', function () {
+        nextPage();
+    });
+
+    $('#action-button-skip')[0].addEventListener('click', function () {
+        skipPage();
+    });
+
+    renderPage();
+}
+
+function setupAttachmentStep(content) {
     content.append(
-                '<div class="row" id="attachmentHeaders">' +
+        '<div class="row" id="attachmentHeaders">' +
         '<div class="col-sm-4"><label>Bestandsnaam</label></div>' +
         '<div class="col-sm-6"><label>Commentaar</label></div>' +
         '<div class="col-sm-2"><br></div>' +
         '</div><div id="attachments"></div>');
 
     content.append(
-    '<div id="buttons" class="row">' +
+        '<div id="buttons" class="row">' +
         '<span class="col-xs-8"><label class="btn btn-primary btn-file"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Toevoegen <input id="file" accept="application/pdf" type="file" multiple style="display: none;"> </label></span>' +
         '<span class="col-xs-4"><button id="action-button-removeAll" class="btn btn-primary"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>verwijder alle</button></span>' +
-    '</div>');
-    
+        '</div>');
+
     $('#action-button-removeAll')[0].addEventListener('click', function () {
         removeAllAttachments();
     });
-    
+
     $('#file')[0].addEventListener('change', function () {
         addFile();
     });
+}
+
+function setupSign(content){
 
 }
+
 
 function updateComment(index, value){
     console.log("value changed to " + value);
@@ -135,25 +181,8 @@ function addFile(){
     renderAttachments();
 }
 
-$('#action-button-previous')[0].addEventListener('click', function () {
-    previousPage();
-});
-
-$('#action-button-yes')[0].addEventListener('click', function () {
-    nextPage();
-});
-
-$('#action-button-no')[0].addEventListener('click', function () {
-    nextPage();
-});
-
-$('#action-button-skip')[0].addEventListener('click', function () {
-    skipPage();
-});
-
-
 /* Initialize the interface */
 UI.setSyncState(SyncStates.SYNCED);
 UI.setUserNames(['Erik Tienen', 'Tine van de Meent']);
 UI.setCurrentStep(1);
-renderPage();
+setupQuestions($('#content'));

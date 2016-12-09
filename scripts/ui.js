@@ -97,7 +97,7 @@ UI.Content.setAttachments = function (value){
     }
 };  
 
-UI.Content.setNextButton = function(){
+UI.Content.setNextPrevButton = function(){
     var buttons = $('#action-buttons');
     buttons.empty();
     buttons.append('<span class="col-xs-6"><button id="action-button-previous" class="btn btn-default btn-lg">Vorige</button></span>');
