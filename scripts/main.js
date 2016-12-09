@@ -5,6 +5,7 @@ SyncStates = {
     OFFLINE: 'OFFLINE'
 };
 
+var currentStep = 1;
 
 /* Main flow of the tax return */
 var flow = [
@@ -14,6 +15,9 @@ var flow = [
     "Vraag 4/5",
     "Vraag 5/5"
 ];
+
+/*List of additional attachments*/
+var attachments = [];
 
 
 /* Completed parts of the flow */
@@ -28,10 +32,21 @@ function renderPage() {
         question = flow[0];
     } else {
         question = 'Klaar!';
+        UI.Content.setNextButton();
+        $('#action-button-next')[0].addEventListener('click', function () {
+            setNextStep();
+        });
     }
 
     UI.setProgress(completed.length / (flow.length + completed.length));
     UI.Content.setQuestion(question);
+}
+
+/* Update page to match the additional attachments*/
+function renderAttachments(){
+    
+
+    UI.Content.setAttachments(attachments);
 }
 
 
@@ -62,6 +77,14 @@ function skipPage() {
         flow.push(page);
         renderPage();
     }
+}
+
+function setNextStep(){
+    currentStep++;
+    UI.setCurrentStep(currentStep);
+    var content = $('#content');
+    content.empty();
+
 }
 
 

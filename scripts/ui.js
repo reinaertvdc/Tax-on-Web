@@ -79,6 +79,17 @@ UI.setProgress = function (fraction) {
 UI.Content = function () {
 };
 
+/* Set the additional attachments*/
+UI.Content.setAttachments = function (value){
+    
+};  
+
+UI.Content.setNextButton = function(){
+    var buttons = $('#action-buttons');
+    buttons.empty();
+    buttons.append('<span class="col-xs-6"><button id="action-button-previous" class="btn btn-default btn-lg">Vorige</button></span>');
+    buttons.append('<span class="col-xs-6"><button id="action-button-next" class="btn btn-default btn-lg">Volgende</button></span>');
+};
 
 /* Set the content to the given question */
 UI.Content.setQuestion = function (value) {
