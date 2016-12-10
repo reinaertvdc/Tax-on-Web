@@ -33,13 +33,6 @@ function renderPage() {
     } else {
         question = 'Klaar!';
         UI.Content.setNextPrevButton();
-
-        $('#action-button-next')[0].addEventListener('click', function () {
-            ChangeStep(1);
-        });
-        $('#action-button-previous')[0].addEventListener('click', function () {
-            ChangeStep(-1);
-        });
         $('#action-button-previous').prop('disabled',true);
     }
 
@@ -92,8 +85,10 @@ function ChangeStep(value){
     else if(currentStep == 2) {
         $('#action-button-previous').prop('disabled', false);
         UI.setupAttachmentStep(content);
+        UI.Content.setNextPrevButton();
     }else if(currentStep == 3) {
         UI.setupSign(content);
+        UI.Content.setSignButtons();
     }
 
 }

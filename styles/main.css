@@ -196,7 +196,7 @@ main {
     margin: 0 0 0 0;
 }
 
-.row {
+.attachmentsRow {
     margin-bottom: 1rem;
     display: flex;
     align-items: center;
@@ -208,4 +208,12 @@ main {
 
 .glyphicon {
     margin-right: 1rem;
+}
+
+#action-button-download {
+    float: right;
+}
+
+#download {
+    float: right;
 }

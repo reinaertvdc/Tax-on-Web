@@ -124,12 +124,60 @@ UI.setupAttachmentStep = function(content) {
 };
 
 UI.setupSign = function(content){
+    content.append('<div class="panel panel-danger">' +
+                    '<div class="panel-heading">' +
+                         '<h3 class="panel-title">Opmerkingen!</h3>' +
+                    '</div><div class="panel-body">' +
+        '<p>* Indien u een gezamelijke aangifte indient, moeten uw echtgeno(o)t(e) en uzelf elk de aangifte ondertekenen.</p>' +
+        '<p>* Als u de aangifte elektronisch indient, verstuur dan geen papieren versie meer.</p>' +
+        '</div></div>');
 
-}
+    content.append('<div class="panel panel-primary">' +
+        '<div class="panel-heading">' +
+        '<h3 class="panel-title">ZOOMIT</h3>' +
+        '</div><div class="panel-body">' +
+        '<p>* info info info info info info info info info info info info info info</p>' +
+        '<p>* info info info info info info info info info info info info info info</p>' +
+        '<p>* info info info info info info info info info info info info info info</p>' +
+        '<p>* info info info info info info info info info info info info info info</p>' +
+        '<p>* info info info info info info info info info info info info info info</p>' +
+        '</div>' +
+        '<div class="panel-footer">' +
+        '<div class="checkbox">' +
+        '<label><input type="checkbox" value="">Ik wens Zoomit te gebruiken.</label>' +
+        '</div> </div></div>');
+
+    content.append('<div class="panel panel-primary">' +
+        '<div class="panel-heading">' +
+        '<h3 class="panel-title">Verantwoordingsstukken en juridische overeenkomsten</h3>' +
+        '</div><div class="panel-body">' +
+        'text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text'+
+        '</div>' +
+        '<div class="panel-footer">' +
+        '<div class="checkbox">' +
+        '<label><input type="checkbox" value="">Ik ga akkoord met bovenstaande voorwaarden.</label>' +
+        '</div> </div></div>');
+    content.append('<div id="buttons" class="row"><span class="col-xs-4" id="download"><button id="action-button-download" class="btn btn-default btn-lg">Aangifte downloaden</button></span></div>');
+};
+
+
 
 
 /* Define a Content object within the UI object to hold static methods that operate on the actual content */
 UI.Content = function () {
+};
+
+UI.Content.setSignButtons = function () {
+    var buttons = $('#action-buttons');
+    buttons.empty();
+    buttons.append('<span class="col-xs-6"><button id="action-button-previous" class="btn btn-default btn-lg">Vorige</button></span>');
+    buttons.append('<span class="col-xs-6"><button id="action-button-sign" class="btn btn-default btn-lg">Ondertekenen</button></span>');
+    $('#action-button-sign')[0].addEventListener('click', function () {
+
+    });
+    $('#action-button-previous')[0].addEventListener('click', function () {
+        ChangeStep(-1);
+    });
 };
 
 /* Set the additional attachments*/
@@ -137,11 +185,11 @@ UI.Content.setAttachments = function (value){
     var attachments = $('#attachments');
     for(var j = 0; j < value.length; j++){
         var rowValues = value[j];
-        var rowContent = '<div class="row">' +
+        var rowContent = '<div class="row attachmentsRow">' +
             '<div class="col-sm-4 filenameContainer"><label class="filename">'+ rowValues[0] + '</label></div>';
 
         if(rowValues[1] != "")
-            rowContent += '<div class="col-sm-6"><input type="text" class="form-control" onblur="updateComment(' + j + ', this.value)" value="' + rowValues[1] + '"></div>';
+            rowContent += '<div class="col-sm-7"><input type="text" class="form-control" onblur="updateComment(' + j + ', this.value)" value="' + rowValues[1] + '"></div>';
         else
             rowContent += '<div class="col-sm-6"><input type="text" class="form-control" onblur="updateComment(' + j + ', this.value)" value=""></div>';
 
@@ -155,6 +203,12 @@ UI.Content.setNextPrevButton = function(){
     buttons.empty();
     buttons.append('<span class="col-xs-6"><button id="action-button-previous" class="btn btn-default btn-lg">Vorige</button></span>');
     buttons.append('<span class="col-xs-6"><button id="action-button-next" class="btn btn-default btn-lg">Volgende</button></span>');
+    $('#action-button-next')[0].addEventListener('click', function () {
+        ChangeStep(1);
+    });
+    $('#action-button-previous')[0].addEventListener('click', function () {
+        ChangeStep(-1);
+    });
 };
 
 /* Set the content to the given question */
