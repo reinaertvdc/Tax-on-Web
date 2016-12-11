@@ -1,0 +1,42 @@
+/*/
+ * Let the main content fill any remaining height after the other elements have
+ * taken what they need
+/*/
+
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex-grow: 1;
+}
+
+/*/
+ * Let the 'actual content' fill any remaining height after the other elements
+ * have taken what they need
+/*/
+
+main {
+    display: flex;
+    flex-direction: column;
+}
+
+#content {
+    flex-grow: 1;
+    flex-shrink: 0;
+}
+
+/*/
+ * Style the 'actual content'
+/*/
+
+#content {
+    margin: 64px 0;
+    display: flex;
+    flex-direction: column;
+}

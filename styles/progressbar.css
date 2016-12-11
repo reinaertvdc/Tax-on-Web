@@ -1,0 +1,8 @@
+/*/
+ * Style the progress bar
+/*/
+
+#progress-bar {
+    min-height: 20px;
+    margin: 0;
+}

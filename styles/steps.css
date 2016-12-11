@@ -1,0 +1,49 @@
+/*/
+ * Style the steps (based on https://github.com/join)
+/*/
+
+#steps {
+    padding: 0 15px;
+    display: block;
+}
+
+#steps li {
+    background-color: #fafafa;
+    color: #ccc;
+
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+
+    list-style: none;
+}
+
+#steps li:first-of-type {
+    border-right-width: 0;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+#steps li:last-of-type {
+    border-left-width: 0;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+#steps .glyphicon {
+    font-size: 24px;
+    margin-right: 12px;
+    vertical-align: top;
+}
+
+#steps div {
+    margin-left: 40px;
+}
+
+#steps li.current {
+    color: inherit;
+    background-color: inherit;
+}
+
+#steps li.current .glyphicon {
+    color: #4078c0;
+}

@@ -1,0 +1,47 @@
+/*/
+ * Style the navigation bar
+/*/
+
+#navbar {
+    height: 50px;
+    margin-bottom: 32px;
+    display: block;
+}
+
+/*/
+ * Style the logo
+/*/
+
+#logo a {
+    padding: 10px 15px;
+}
+
+#logo img {
+    height: 100%;
+}
+
+/*/
+ * Style the user names
+/*/
+
+#user-names {
+    padding: 5px 15px;
+}
+
+#user-names span {
+    margin: 0;
+    clear: both;
+    float: right;
+}
+
+#user-names span:only-child {
+    line-height: 40px;
+}
+
+/*/
+ * Style the options menu
+/*/
+
+#options-menu-content .glyphicon {
+    margin-right: 20px;
+}
