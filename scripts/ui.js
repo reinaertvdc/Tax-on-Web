@@ -128,19 +128,21 @@ UI.setupSign = function(content){
                     '<div class="panel-heading">' +
                          '<h3 class="panel-title">Opmerkingen!</h3>' +
                     '</div><div class="panel-body">' +
-        '<p>* Indien u een gezamelijke aangifte indient, moeten uw echtgeno(o)t(e) en uzelf elk de aangifte ondertekenen.</p>' +
-        '<p>* Als u de aangifte elektronisch indient, verstuur dan geen papieren versie meer.</p>' +
+        '<p>- Indien u een gezamelijke aangifte indient, moeten uw echtgeno(o)t(e) en uzelf elk de aangifte ondertekenen.</p>' +
+        '<p>- Als u de aangifte elektronisch indient, verstuur dan geen papieren versie meer.</p>' +
+        '<p>- Uw persoonsgegevens worden door de FOD Financiën verwerkt in overeenstemming met de wet van 8 december 1992 en met de andere in voege zijnde wetten. Bijkomende inlichtingen met betrekking tot dit onderwerp vindt u ' +
+        '<a href="https://ccff02.minfin.fgov.be/towsimu/app/citizen/public/taxform/help.do?contentkey=application_help_0605" target="_blank">hier.</a></p>' +
         '</div></div>');
 
     content.append('<div class="panel panel-primary">' +
         '<div class="panel-heading">' +
-        '<h3 class="panel-title">ZOOMIT</h3>' +
+        '<h3 class="panel-title">Zoomit</h3>' +
         '</div><div class="panel-body">' +
-        '<p>* info info info info info info info info info info info info info info</p>' +
-        '<p>* info info info info info info info info info info info info info info</p>' +
-        '<p>* info info info info info info info info info info info info info info</p>' +
-        '<p>* info info info info info info info info info info info info info info</p>' +
-        '<p>* info info info info info info info info info info info info info info</p>' +
+        '<p>U kan uw aanslagbiljet in de personenbelasting voortaan ontvangen in uw internetbankieren via Zoomit.</p>'+
+        '<p>- Deze gratis dienst is niet verplicht.</p>' +
+        '<p>- Indien ik voor Zoomit kies, zal ik mijn papieren aanslagbiljet niet meer ontvangen.</p>' +
+        '<p>- Ik bevestig dat ik het internetbankieren gebruik.</p>' +
+        '<p>- Ik bevestig tevens dat ik de gebruiksvoorwaarden en de juridische gevolgen met betrekking tot deze keuze, die ik steeds kan raadplegen via de <a href="http://financien.belgium.be/nl/particulieren/belastingaangifte/aanslagbiljet/#q7" target="_blank">website van de FOD Financiën</a>, heb gelezen en aanvaard.</p>' +
         '</div>' +
         '<div class="panel-footer">' +
         '<div class="checkbox">' +
@@ -151,13 +153,13 @@ UI.setupSign = function(content){
         '<div class="panel-heading">' +
         '<h3 class="panel-title">Verantwoordingsstukken en juridische overeenkomsten</h3>' +
         '</div><div class="panel-body">' +
-        'text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text'+
+        '<p>- Gelieve hieronder aan te duiden of u de verantwoordingsstukken die in de bij de aangifte gevoegde toelichting opgenomen zijn, ter beschikking zult houden en hen op vraag van de administratie voor te leggen.</p>' +
         '</div>' +
         '<div class="panel-footer">' +
         '<div class="checkbox">' +
         '<label><input type="checkbox" value="">Ik ga akkoord met bovenstaande voorwaarden.</label>' +
-        '</div> </div></div>');
-    content.append('<div id="buttons" class="row"><span class="col-xs-4" id="download"><button id="action-button-download" class="btn btn-default btn-lg">Aangifte downloaden</button></span></div>');
+        '</div></div></div>');
+    content.append('<div id="buttons" class="row"><span class="col-xs-4" id="download"><a href="docs/aangifte.pdf" download><button id="action-button-download" class="btn btn-primary btn-lg">Aangifte downloaden</button></a></form></span></div>');
 };
 
 
@@ -171,7 +173,7 @@ UI.Content.setSignButtons = function () {
     var buttons = $('#action-buttons');
     buttons.empty();
     buttons.append('<span class="col-xs-6"><button id="action-button-previous" class="btn btn-default btn-lg">Vorige</button></span>');
-    buttons.append('<span class="col-xs-6"><button id="action-button-sign" class="btn btn-default btn-lg">Ondertekenen</button></span>');
+    buttons.append('<span class="col-xs-6"><a href="https://eservices.minfin.fgov.be/taxonweb/app/citizen/public/taxbox/home.do;TAXONWEB_JSESSIONID=hkyWYTfFynBX2LR8vKy0zT182vnF6LjcpK9jDzTf9Zcf28vpwxxl!-1768414502"><button id="action-button-sign" class="btn btn-primary btn-lg">Ondertekenen</button></a></span>');
     $('#action-button-sign')[0].addEventListener('click', function () {
 
     });
