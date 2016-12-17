@@ -1,0 +1,21 @@
+.indent1 {
+    text-indent: 4rem;
+}
+
+.indent2 {
+    text-indent: 8rem;
+}
+
+.indent3 {
+    text-indent: 12rem;
+}
+
+.fieldRows {
+    display: flex;
+    margin-bottom: 1rem;
+    align-items: center;
+}
+
+.fieldRows > div > * {
+    margin-bottom: 0;
+}

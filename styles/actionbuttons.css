@@ -10,7 +10,7 @@
     width: 100%;
 }
 
-#buttons {
+.buttons {
     margin-top: 2rem;
 }
 
@@ -20,25 +20,6 @@
 
 #action-button-removeAll {
     float: right;
-}
-
-.filenameContainer {
-    overflow: hidden;
-    margin: auto;
-}
-
-#attachmentHeaders{
-    margin-bottom: 2rem;
-}
-
-.filename {
-    margin: 0 0 0 0;
-}
-
-.attachmentsRow {
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
 }
 
 .removeButton{

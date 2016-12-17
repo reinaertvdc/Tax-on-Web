@@ -147,7 +147,7 @@ UI.setupSign = function(content){
         '<div class="panel-footer">' +
         '<div class="checkbox">' +
         '<label><input type="checkbox" value="">Ik wens Zoomit te gebruiken.</label>' +
-        '</div> </div></div>');
+        '</div></div></div>');
 
     content.append('<div class="panel panel-primary">' +
         '<div class="panel-heading">' +
@@ -159,14 +159,77 @@ UI.setupSign = function(content){
         '<div class="checkbox">' +
         '<label><input type="checkbox" value="">Ik ga akkoord met bovenstaande voorwaarden.</label>' +
         '</div></div></div>');
-    content.append('<div id="buttons" class="row"><span class="col-xs-4" id="download"><a href="docs/aangifte.pdf" download><button id="action-button-download" class="btn btn-primary btn-lg">Aangifte downloaden</button></a></form></span></div>');
+    content.append('<div class="row buttons"><span class="col-xs-4" id="download"><a href="docs/aangifte.pdf" download><button id="action-button-download" class="btn btn-primary btn-lg">Aangifte downloaden</button></a></form></span></div>');
 };
 
+UI.setDayCareWizard = function () {
+    var content = $('#content');
+    content.empty();
+    content.append('<div class="panel panel-primary">' +
+        '<div class="panel-heading">' +
+        '<h3 class="panel-title">Aftrekbaar bedrag van de uitgaven voor opvang van kinderen.</h3>' +
+        '</div><div class="panel-body">' +
+        '<p>- Geef voor elk kind de prijs van de opvang per dag en het aantal dagen in. (Per opvangdag en per kind mag dat bedrag evenwel niet hoger zijn dan 11,20 EUR).</p>' +
+        '<p>- Als u het dagtarief niet kent, vul dan het aantal dagen en het betaalde bedrag in.</p>' +
+        '<p>- Verschillende opvangen tijdens dezelfde dag worden als 1 opvangdag gerekend, tel de betaalde bedragen voor deze opvangdag samen.</p>' +
+        '<div id="wizard-rows">' +
+        '<div class="row wizard-row">' +
+        '<div class="col-sm-4"><label>Naam en voornaam</label></div>' +
+        '<div class="col-sm-2"><label>Dagtarief</label></div>' +
+        '<div class="col-sm-2"><label>Aantal dagen</label></div>' +
+        '<div class="col-sm-2"><label>Aftrekbaar bedrag</label></div>' +
+        '<div class="col-sm-2 checkbox-label"><label>jonger dan 3</label></div></div>' +
 
+        '<div class="row wizard-row">' +
+        '<div class="col-sm-4"><input type="text" class="form-control" ></div>' +
+        '<div class="col-sm-2"><input type="number" class="form-control" oninput="updateResult()" min="0"></div>' +
+        '<div class="col-sm-2"><input type="number" class="form-control" oninput="updateResult()" min="0" step="1"></div>' +
+        '<div class="col-sm-2"><input type="number" class="form-control" value="0" disabled></div>' +
+        '<div class="col-sm-2 checkbox-container"><input type="checkbox" class="wizard-checkbox" value="" ></div></div>' +
+        '</div><button id="action-button-addChild" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>Kind toevoegen</button></form></div>' +
 
+        '<div class="panel-footer">' +
+        '<div class="pull-right"><label id="resultLabel">1384</label><input id="result" type="number" class="form-control" oninput="checkDisableWizard(this)" min="0" value="0"></div><div class="clearfix"></div>'+
+    '</div></div>');
+
+    $('#action-button-addChild')[0].addEventListener('click', function () {
+        UI.Content.addChild();
+    });
+};
+
+UI.setCodeFields = function (category, section) {
+    var content = $('#content');
+    var sectionsSingleFields = {};
+    var sectionMultipleFields = {};
+    content.empty();
+    content.append('<h3>'+ category +'</h3>');
+
+    if(section == ""){
+        sectionsSingleFields = singleFields[category];
+        sectionMultipleFields = multipleFields[category];
+    }else {
+        sectionsSingleFields[section] = singleFields[category][section];
+        sectionMultipleFields[section] = multipleFields[category][section];
+    }
+
+    getSingleFields(sectionsSingleFields, 0);
+    //getMultipleFields(sectionMultipleFields, 0);
+};
 
 /* Define a Content object within the UI object to hold static methods that operate on the actual content */
 UI.Content = function () {
+};
+
+UI.Content.addSingleField = function (label, field, indentLvl){
+    var content = $('#content');
+    var fields = '<div class="row fieldRows">';
+    if(indentLvl == 0)
+        fields += '<div class="col-sm-9"><label class="indent'+ indentLvl + '">' + label +'</label></div>';
+    else
+        fields += '<div class="col-sm-9"><p class="indent'+ indentLvl + '">' + label +'</p></div>';
+    fields += ('<div class="col-sm-1"><label>' + field + '</label></div>' +
+        '<div class="col-sm-2"><input type="number" class="form-control"></div></div>');
+    content.append(fields);
 };
 
 UI.Content.setSignButtons = function () {
@@ -219,4 +282,19 @@ UI.Content.setQuestion = function (value) {
     content.empty();
     content.append('<span class="question">' + value + '</span>');
 };
+
+/* Add a child row in the wizard */
+UI.Content.addChild = function () {
+    var wizard = $('#wizard-rows');
+    wizard.append(
+        '<div class="row wizard-row">' +
+        '<div class="col-sm-4"><input type="text" class="form-control"></div>' +
+        '<div class="col-sm-2"><input type="number" class="form-control" oninput="updateResult()"></div>' +
+        '<div class="col-sm-2"><input type="number" class="form-control" oninput="updateResult()"></div>' +
+        '<div class="col-sm-2"><input type="number" class="form-control" value="0" disabled></div>' +
+        '<div class="col-sm-2 checkbox-container"><input type="checkbox" class="wizardCheckbox" value=""></div></div>'
+    );
+};
+
+
 

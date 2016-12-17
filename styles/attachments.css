@@ -1,0 +1,19 @@
+
+.filenameContainer {
+    overflow: hidden;
+    margin: auto;
+}
+
+#attachmentHeaders{
+    margin-bottom: 2rem;
+}
+
+.filename {
+    margin: 0 0 0 0;
+}
+
+.attachmentsRow {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
