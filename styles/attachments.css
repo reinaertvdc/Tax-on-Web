@@ -1,0 +1,64 @@
+/*/
+ * Style the headers
+/*/
+
+#attachments-headers {
+    display: flex;
+    font-size: large;
+}
+
+#attachments-header-name {
+    min-width: 300px;
+    max-width: 300px;
+    flex-grow: 0;
+}
+
+#attachments-header-comments {
+    flex-grow: 1;
+    margin-left: 15px;
+}
+
+/*/
+ * Style the list and list items
+/*/
+
+#attachments-list {
+    list-style: none;
+}
+
+#attachments-list li {
+    display: flex;
+    margin: 15px auto;
+}
+
+#attachments-list li > * {
+    margin: auto;
+}
+
+#attachments-list label {
+    min-width: 300px;
+    max-width: 300px;
+    font-weight: normal;
+    word-break: break-all;
+}
+
+#attachments-list input {
+    margin: auto 15px;
+    flex-grow: 1;
+}
+
+#attachments-list button {
+    margin: auto;
+}
+
+/*/
+ * Style the buttons
+/*/
+
+#attachments-buttons {
+    margin-top: 64px;
+}
+
+#attachments-button-remove-all {
+    float: right;
+}

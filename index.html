@@ -20,8 +20,30 @@
     <link rel="stylesheet" href="styles/progressbar.css">
     <link rel="stylesheet" href="styles/actionbuttons.css">
     <link rel="stylesheet" href="styles/questions.css">
+    <link rel="stylesheet" href="styles/attachments.css">
+    <link rel="stylesheet" href="styles/wizards.css">
+    <link rel="stylesheet" href="styles/codefields.css">
+
 </head>
 <body>
+
+<!-- Message box -->
+<div class="modal fade modal-danger" id="errorModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header-danger">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Foutmelding</h4>
+            </div>
+            <div class="modal-body">
+                <p></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary close-btn" data-dismiss="modal">Sluiten</button>
+            </div>
+        </div>
+    </div>
+</div> <!-- /Message box -->
 
 <!-- Navigation bar -->
 <nav id="navbar" class="navbar navbar-default navbar-static-top"><div class="container-fluid">
@@ -93,12 +115,10 @@
     </div>
 
     <!-- Actual content -->
-    <div id="content"></div>
+    <div id="content-wrapper"><div id="content"></div></div>
 
     <!-- Action buttons -->
-    <div id="action-buttons" class="row">
-
-    </div>
+    <div id="action-buttons" class="row"></div>
 
 </main> <!-- /Main content -->
 
@@ -107,6 +127,10 @@
 <script src="scripts/lib/ie10-viewport-bug-workaround.js"></script>
 
 <script src="scripts/ui.js"></script>
+<script src="scripts/step1.js"></script>
+<script src="scripts/step2.js"></script>
+<script src="scripts/step3.js"></script>
+<script src="scripts/session.js"></script>
 <script src="scripts/main.js"></script>
 </body>
 </html>
