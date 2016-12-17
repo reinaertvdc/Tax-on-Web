@@ -321,5 +321,5 @@ function activateErrorModal(content){
 UI.setSyncState(SyncStates.SYNCED);
 UI.setUserNames(['Erik Tienen', 'Tine van de Meent']);
 UI.setCurrentStep(1);
-//UI.setupQuestions($('#content'));
-UI.setCodeFields("A. PENSIOENEN", "");
+UI.setupQuestions($('#content'));
+//UI.setCodeFields("A. PENSIOENEN", "");
