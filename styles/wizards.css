@@ -1,0 +1,54 @@
+.wizard-row {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+#action-button-addChild {
+    margin-top: 1rem;
+}
+
+#result {
+    display: inline-block;
+    width: 15rem;
+}
+
+#resultLabel {
+    margin-right: 3rem;
+    font-size: large;
+}
+
+.modal-header-danger {
+    color:#fff;
+    padding:9px 15px;
+    border-bottom:1px solid #eee;
+    background-color: #d9534f;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.close-btn {
+    margin: 0 auto;
+}
+
+.modal-footer {
+    text-align:center;
+}
+
+
+.checkbox-label{
+    text-align:center;
+}
+
+.checkbox-container {
+    text-align:center;
+}
+
+.wizard-checkbox {
+    display:inline-block;
+}
+
