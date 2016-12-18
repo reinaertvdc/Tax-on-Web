@@ -214,7 +214,7 @@ UI.Content.setSectionC = function (title, indentLvl) {
         '<div class="col-sm-6"><div class="bfh-selectbox bfh-countries" data-country="US"></div></div>' +
         '<div class="col-sm-2"><input type="number" class="form-control"></div>' +
         '<div class="col-sm-3"><input type="number" class="form-control"></div>' +
-        '<div class="col-sm-1"><button type="button" class="btn btn-primary btn-xs btn-round" onclick="addSectionCField()"><span class="glyphicon glyphicon-plus"></span></button></div></div>';
+        '<div class="col-sm-1"><button type="button" class="btn btn-primary btn-xs btn-round" onclick="addSectionCField('+title+','+ indentLvl+')"><span class="glyphicon glyphicon-plus"></span></button></div></div>';
 
     content.append(fields);
 

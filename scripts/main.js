@@ -289,7 +289,7 @@ function getFields (set, indentLvl){
     }
 }
 
-function addSectionCField() {
+function addSectionCField(title, indentLvl) {
     var content = $('#content');
     var fields = '<label class="indent'+ indentLvl +'">' + title + '</label>';
     fields += '<div class="row wizard-row indent'+ indentLvl +'">' +
@@ -328,4 +328,4 @@ UI.setSyncState(Session.SYNC_STATES.SYNCED);
 UI.setUserNames(['Erik Tienen', 'Tine van de Meent']);
 UI.setCurrentStep(1);
 //UI.setupQuestions($('#content'));
-UI.setCodeFields("A. PENSIOENEN", "");
+UI.setCodeFields("C. PENSIOENEN VAN BUITENLANDSE OORSPRONG (EN DE DESBETREFFENDE KOSTEN).", "");
