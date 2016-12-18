@@ -1,13 +1,13 @@
 .indent1 {
-    text-indent: 4rem;
+    margin-left: 4rem;
 }
 
 .indent2 {
-    text-indent: 8rem;
+    margin-left: 8rem;
 }
 
 .indent3 {
-    text-indent: 12rem;
+    margin-left: 12rem;
 }
 
 .fieldRows {
@@ -18,4 +18,20 @@
 
 .fieldRows > div > * {
     margin-bottom: 0;
+}
+
+.btn-round {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    text-align: center;
+}
+
+.btn-round.btn-xs {
+    width: 24px;
+    height: 24px;
+}
+
+.btn-round span {
+    margin-right: 0rem;
 }

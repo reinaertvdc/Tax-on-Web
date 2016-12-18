@@ -5,33 +5,19 @@ Session.setUserNames(['Erik Tienen', 'Tine van de Meent']);
 Session.setCurrentStep(2);
 
 /* you can fill in multiple of the same field for these questions */
-var multipleFields =
-    {"A. PENSIOENEN":
-        {"1. Andere dan de onder 2 en 3 bedoelde pensioenen.":
-
-                {"a) Wettelijke pensioenen verkregen vanaf de wettelijke pensioenleeftijd:": 288,
-                "f) Andere pensioenen, renten (behalve omzettingsrenten) en als zodanig geldende kapitalen, afkoopwaarden, enz., die gezamenlijk belastbaar zijn:": 211}
-        },
-
-    "B. BEDRIJFSVOORHEFFING.":
-        {"1. Verrekenbaar en terugbetaalbaar":
-            {"a) Verrekenbaar en terugbetaalbaar volgens fiches:": 255},
-
-        "2. Verrekenbaar, maar niet terugbetaalbaar":
-            {"a) Verrekenbaar, maar niet terugbetaalbaar volgens fiches:" : 425}
-
-        }
-    };
+var multipleFields = [288, 211, 255, 425];
 
 
 /* every question has only 1 field */
-var singleFields =
+var fields =
     {"A. PENSIOENEN": {
         "1. Andere dan de onder 2 en 3 bedoelde pensioenen.": {
+            "a) Wettelijke pensioenen verkregen vanaf de wettelijke pensioenleeftijd:": 288,
             "b) Totaal van rubriek a:": 1228,
             "c) Achterstallen van onder a bedoelde wettelijke pensioenen:": 1230,
             "d) Overlevingspensioenen en overgangsuitkeringen:": 1229,
             "e) Achterstallen van overlevingspensioenen:": 1231,
+            "f) Andere pensioenen, renten (behalve omzettingsrenten) en als zodanig geldende kapitalen, afkoopwaarden, enz., die gezamenlijk belastbaar zijn:": 211,
             "g) Totaal van rubriek f:": 1211,
             "h) Achterstallen van onder f bedoelde pensioenen, renten, enz.:": 1212,
             "i) Kapitalen en afkoopwaarden die afzonderlijk belastbaar zijn:": {
@@ -71,10 +57,15 @@ var singleFields =
     },
     "B. BEDRIJFSVOORHEFFING.":
         {"1. Verrekenbaar en terugbetaalbaar":
-            {"b) Totaal van rubriek a:": 1225},
+            {"a) Verrekenbaar en terugbetaalbaar volgens fiches:": 255,
+                "b) Totaal van rubriek a:": 1225},
 
         "2. Verrekenbaar, maar niet terugbetaalbaar":
-            {"b) Totaal van rubriek a:": 1425}
+            {"a) Verrekenbaar, maar niet terugbetaalbaar volgens fiches:" : 425,
+                "b) Totaal van rubriek a:": 1425}
+        },
+        "C. PENSIOENEN VAN BUITENLANDSE OORSPRONG (EN DE DESBETREFFENDE KOSTEN).": {
+            "Vermeld het land, de code waarnaast ze zijn ingevuld (bv. 1211) en het bedrag van de hierboven vermelde pensioenen van buitenlandse oorsprong (en de desbetreffende kosten) waarvoor u aanspraak maakt op belastingvermindering voor inkomsten van buitenlandse oorsprong (pensioenen die zijn vrijgesteld van de personenbelasting, maar in aanmerking worden genomen voor de berekening van de belasting op uw andere inkomsten, of waarvoor de belasting tot de helft wordt verminderd).": 0
         }
     };
 
@@ -277,35 +268,51 @@ function updateResult() {
 
 }
 
-function getSingleFields (set, indentLvl){
+function getFields (set, indentLvl){
     var content = $('#content');
     for (var key in set) {
+        /* check if there is a next niveau */
         if(isNaN(set[key])) {
             if(indentLvl == 0)
                 content.append('<label class="indent'+ indentLvl +'">' + key + '</label>');
             else {
                 content.append('<p class="indent' + indentLvl + '">' + key + '</p>');
             }
-            getSingleFields(set[key], indentLvl + 1);
+            /* get next niveau */
+            getFields(set[key], indentLvl + 1);
         }else {
-            UI.Content.addSingleField(key, set[key], indentLvl);
+            if(set[key] == 0)
+                UI.Content.setSectionC(key, indentLvl);
+            else
+                UI.Content.addField(key, set[key], indentLvl);
         }
     }
 }
 
-function getMultipleFields (set, indentLvl){
+function addSectionCField() {
     var content = $('#content');
-    for (var key in set) {
-        if(isNaN(set[key])) {
-            if(indentLvl == 0)
-                content.append('<label class="indent'+ indentLvl +'">' + key + '</label>');
-            else
-                content.append('<p class="indent'+ indentLvl +'">' + key + '</p>');
-            getMultipleFields(set[key], indentLvl + 1);
-        }else {
-            UI.Content.addSingleField(key, set[key], indentLvl);
-        }
-    }
+    var fields = '<label class="indent'+ indentLvl +'">' + title + '</label>';
+    fields += '<div class="row wizard-row indent'+ indentLvl +'">' +
+        '<div class="col-sm-6"><label>Land</label></div>' +
+        '<div class="col-sm-2"><label>Code</label></div>' +
+        '<div class="col-sm-3"><label>Bedrag</label></div></div>';
+
+    fields += '<div class="row wizard-row indent'+ indentLvl +'">' +
+        '<div class="col-sm-6"><div class="bfh-selectbox bfh-countries" data-country="US"></div></div>' +
+        '<div class="col-sm-2"><input type="number" class="form-control"></div>' +
+        '<div class="col-sm-3"><input type="number" class="form-control"></div>' +
+        '</div>';
+
+    content.append(fields);
+}
+
+function addField (code) {
+    var row = $("#" + code);
+
+    $('<div class="row fieldRows"><div class="col-sm-8"></div><' +
+        'div class="col-sm-1"><label>' + code + '</label></div><div class="col-sm-2">' +
+        '<input type="number" class="form-control"></div></div>').insertAfter(row);
+
 }
 
 /* toggles the modal and set the right content (error message) */
@@ -317,8 +324,8 @@ function activateErrorModal(content){
 }
 
 /* Initialize the interface */
-UI.setSyncState(SyncStates.SYNCED);
+UI.setSyncState(Session.SYNC_STATES.SYNCED);
 UI.setUserNames(['Erik Tienen', 'Tine van de Meent']);
 UI.setCurrentStep(1);
-UI.setupQuestions($('#content'));
-//UI.setCodeFields("A. PENSIOENEN", "");
+//UI.setupQuestions($('#content'));
+UI.setCodeFields("A. PENSIOENEN", "");

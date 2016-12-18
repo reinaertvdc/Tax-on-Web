@@ -170,7 +170,7 @@ UI.setDayCareWizard = function () {
         '<div class="col-sm-2"><input type="number" class="form-control" oninput="updateResult()" min="0" step="1"></div>' +
         '<div class="col-sm-2"><input type="number" class="form-control" value="0" disabled></div>' +
         '<div class="col-sm-2 checkbox-container"><input type="checkbox" class="wizard-checkbox" value="" ></div></div>' +
-        '</div><button id="action-button-addChild" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>Kind toevoegen</button></form></div>' +
+        '</div><button id="action-button-addChild" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Kind toevoegen</button></form></div>' +
 
         '<div class="panel-footer">' +
         '<div class="pull-right"><label id="resultLabel">1384</label><input id="result" type="number" class="form-control" oninput="checkDisableWizard(this)" min="0" value="0"></div><div class="clearfix"></div>'+
@@ -181,38 +181,60 @@ UI.setDayCareWizard = function () {
     });
 };
 
+/* set category name and gets the needed sections */
 UI.setCodeFields = function (category, section) {
     var content = $('#content');
-    var sectionsSingleFields = {};
-    var sectionMultipleFields = {};
+    var sectionsFields = {};
     content.empty();
     content.append('<h3>'+ category +'</h3>');
 
     if(section == ""){
-        sectionsSingleFields = singleFields[category];
-        sectionMultipleFields = multipleFields[category];
+        sectionsFields = fields[category];
     }else {
-        sectionsSingleFields[section] = singleFields[category][section];
-        sectionMultipleFields[section] = multipleFields[category][section];
+        sectionsFields[section] = fields[category][section];
     }
 
-    getSingleFields(sectionsSingleFields, 0);
-    //getMultipleFields(sectionMultipleFields, 0);
+    getFields(sectionsFields, 0);
 };
 
 /* Define a Content object within the UI object to hold static methods that operate on the actual content */
 UI.Content = function () {
 };
 
-UI.Content.addSingleField = function (label, field, indentLvl){
+/* set the UI elements for section c of the retirement compartment */
+UI.Content.setSectionC = function (title, indentLvl) {
     var content = $('#content');
-    var fields = '<div class="row fieldRows">';
+    var fields = '<label class="indent'+ indentLvl +'">' + title + '</label>';
+    fields += '<div class="row wizard-row indent'+ indentLvl +'">' +
+        '<div class="col-sm-6"><label>Land</label></div>' +
+        '<div class="col-sm-2"><label>Code</label></div>' +
+        '<div class="col-sm-3"><label>Bedrag</label></div></div>';
+
+    fields += '<div class="row wizard-row indent'+ indentLvl +'">' +
+        '<div class="col-sm-6"><div class="bfh-selectbox bfh-countries" data-country="US"></div></div>' +
+        '<div class="col-sm-2"><input type="number" class="form-control"></div>' +
+        '<div class="col-sm-3"><input type="number" class="form-control"></div>' +
+        '<div class="col-sm-1"><button type="button" class="btn btn-primary btn-xs btn-round" onclick="addSectionCField()"><span class="glyphicon glyphicon-plus"></span></button></div></div>';
+
+    content.append(fields);
+
+};
+
+/* add question with the right field */
+UI.Content.addField = function (title, code, indentLvl){
+    var content = $('#content');
+    var fields = '<div class="row fieldRows" id="'+ code +'">';
     if(indentLvl == 0)
-        fields += '<div class="col-sm-9"><label class="indent'+ indentLvl + '">' + label +'</label></div>';
+        fields += '<div class="col-sm-8"><label class="indent'+ indentLvl + '">' + title +'</label></div>';
     else
-        fields += '<div class="col-sm-9"><p class="indent'+ indentLvl + '">' + label +'</p></div>';
-    fields += ('<div class="col-sm-1"><label>' + field + '</label></div>' +
-        '<div class="col-sm-2"><input type="number" class="form-control"></div></div>');
+        fields += '<div class="col-sm-8"><p class="indent'+ indentLvl + '">' + title +'</p></div>';
+    fields += ('<div class="col-sm-1"><label>' + code + '</label></div>' +
+        '<div class="col-sm-2"><input type="number" class="form-control"></div>');
+
+    if(multipleFields.indexOf(code) > -1){
+        fields += '<div class="col-sm-1"><button type="button" class="btn btn-primary btn-xs btn-round" onclick="addField('+ code +')"><span class="glyphicon glyphicon-plus"></span></button></div>'
+    }
+    fields += '<div></div>';
     content.append(fields);
 };
 
