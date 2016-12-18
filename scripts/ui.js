@@ -211,13 +211,33 @@ UI.Content.setSectionC = function (title, indentLvl) {
         '<div class="col-sm-3"><label>Bedrag</label></div></div>';
 
     fields += '<div class="row wizard-row indent'+ indentLvl +'">' +
-        '<div class="col-sm-6"><div class="bfh-selectbox bfh-countries" data-country="US"></div></div>' +
+        '<div class="col-sm-6"><div class="flagstrap select_country" data-input-name="NewBuyer_country" data-selected-country=""></div></div>' +
         '<div class="col-sm-2"><input type="number" class="form-control"></div>' +
         '<div class="col-sm-3"><input type="number" class="form-control"></div>' +
-        '<div class="col-sm-1"><button type="button" class="btn btn-primary btn-xs btn-round" onclick="addSectionCField('+title+','+ indentLvl+')"><span class="glyphicon glyphicon-plus"></span></button></div></div>';
+        '<div class="col-sm-1"><button type="button" class="btn btn-primary btn-xs btn-round" onclick="UI.Content.addFieldSectionC()"><span class="glyphicon glyphicon-plus"></span></button></div></div>';
 
     content.append(fields);
+    $(document).ready(function () {
+        $('.select_country').attr('data-selected-country','CN');
+        $('.select_country').flagStrap();
+    });
 
+};
+
+/* add new row for country selection in Section C */
+UI.Content.addFieldSectionC = function() {
+    var content = $('#content');
+    var fields = '<div class="row wizard-row indent'+ 0 +'">' +
+        '<div class="col-sm-6"><div class="flagstrap select_country" data-input-name="NewBuyer_country" data-selected-country=""></div></div>' +
+        '<div class="col-sm-2"><input type="number" class="form-control"></div>' +
+        '<div class="col-sm-3"><input type="number" class="form-control"></div>' +
+        '</div>';
+    content.append(fields);
+
+    $(document).ready(function () {
+        $('.select_country').attr('data-selected-country','CN');
+        $('.select_country').flagStrap();
+    });
 };
 
 /* add question with the right field */

@@ -289,23 +289,6 @@ function getFields (set, indentLvl){
     }
 }
 
-function addSectionCField(title, indentLvl) {
-    var content = $('#content');
-    var fields = '<label class="indent'+ indentLvl +'">' + title + '</label>';
-    fields += '<div class="row wizard-row indent'+ indentLvl +'">' +
-        '<div class="col-sm-6"><label>Land</label></div>' +
-        '<div class="col-sm-2"><label>Code</label></div>' +
-        '<div class="col-sm-3"><label>Bedrag</label></div></div>';
-
-    fields += '<div class="row wizard-row indent'+ indentLvl +'">' +
-        '<div class="col-sm-6"><div class="bfh-selectbox bfh-countries" data-country="US"></div></div>' +
-        '<div class="col-sm-2"><input type="number" class="form-control"></div>' +
-        '<div class="col-sm-3"><input type="number" class="form-control"></div>' +
-        '</div>';
-
-    content.append(fields);
-}
-
 function addField (code) {
     var row = $("#" + code);
 
