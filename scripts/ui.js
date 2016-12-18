@@ -185,6 +185,8 @@ UI.setDayCareWizard = function () {
 UI.setCodeFields = function (category, section) {
     var content = $('#content');
     var sectionsFields = {};
+    var infoCode = "_" + category.charAt(0); /* this variable holds the code for a infobButton */
+
     content.empty();
     content.append('<h3>'+ category +'</h3>');
 
@@ -194,7 +196,7 @@ UI.setCodeFields = function (category, section) {
         sectionsFields[section] = fields[category][section];
     }
 
-    getFields(sectionsFields, 0);
+    getFields(sectionsFields, 0, infoCode);
 };
 
 /* Define a Content object within the UI object to hold static methods that operate on the actual content */
@@ -202,9 +204,11 @@ UI.Content = function () {
 };
 
 /* set the UI elements for section c of the retirement compartment */
-UI.Content.setSectionC = function (title, indentLvl) {
+UI.Content.setSectionC = function (title, indentLvl, infoCode) {
     var content = $('#content');
-    var fields = '<label class="indent'+ indentLvl +'">' + title + '</label>';
+    var fields = '';
+
+    fields += '<label class="indent'+ indentLvl +'">' + title + '</label>';
     fields += '<div class="row wizard-row indent'+ indentLvl +'">' +
         '<div class="col-sm-6"><label>Land</label></div>' +
         '<div class="col-sm-2"><label>Code</label></div>' +
@@ -241,13 +245,15 @@ UI.Content.addFieldSectionC = function() {
 };
 
 /* add question with the right field */
-UI.Content.addField = function (title, code, indentLvl){
+UI.Content.addField = function (title, code, indentLvl, infoCode){
     var content = $('#content');
+
     var fields = '<div class="row fieldRows" id="'+ code +'">';
     if(indentLvl == 0)
         fields += '<div class="col-sm-8"><label class="indent'+ indentLvl + '">' + title +'</label></div>';
     else
         fields += '<div class="col-sm-8"><p class="indent'+ indentLvl + '">' + title +'</p></div>';
+
     fields += ('<div class="col-sm-1"><label>' + code + '</label></div>' +
         '<div class="col-sm-2"><input type="number" class="form-control"></div>');
 

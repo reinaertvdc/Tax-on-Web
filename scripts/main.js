@@ -7,6 +7,9 @@ Session.setCurrentStep(2);
 /* you can fill in multiple of the same field for these questions */
 var multipleFields = [288, 211, 255, 425];
 
+var infoIconCodes = ["_A_1", "_A_2", "_A_2_a", "_A_2_b", "_A_2_c2", "_A_3", "_A_4", "_B_1_a", "_B_1_b", "_B_2_a", "_B_2_b", "_C"];
+
+var infoURL = "https://ccff02.minfin.fgov.be/towsimu/app/citizen/public/taxform/bookHelp.do?cadre=V&contentkey=application_help_0102#anchor";
 
 /* every question has only 1 field */
 var fields =
@@ -68,6 +71,8 @@ var fields =
             "Vermeld het land, de code waarnaast ze zijn ingevuld (bv. 1211) en het bedrag van de hierboven vermelde pensioenen van buitenlandse oorsprong (en de desbetreffende kosten) waarvoor u aanspraak maakt op belastingvermindering voor inkomsten van buitenlandse oorsprong (pensioenen die zijn vrijgesteld van de personenbelasting, maar in aanmerking worden genomen voor de berekening van de belasting op uw andere inkomsten, of waarvoor de belasting tot de helft wordt verminderd).": 0
         }
     };
+
+
 
 
 var result = 0;
@@ -268,7 +273,7 @@ function updateResult() {
 
 }
 
-function getFields (set, indentLvl){
+function getFields (set, indentLvl, infoCode){
     var content = $('#content');
     for (var key in set) {
         /* check if there is a next niveau */
@@ -279,7 +284,7 @@ function getFields (set, indentLvl){
                 content.append('<p class="indent' + indentLvl + '">' + key + '</p>');
             }
             /* get next niveau */
-            getFields(set[key], indentLvl + 1);
+            getFields(set[key], indentLvl + 1, (infoCode + key.charAt(0)));
         }else {
             if(set[key] == 0)
                 UI.Content.setSectionC(key, indentLvl);
@@ -311,4 +316,4 @@ UI.setSyncState(Session.SYNC_STATES.SYNCED);
 UI.setUserNames(['Erik Tienen', 'Tine van de Meent']);
 UI.setCurrentStep(1);
 //UI.setupQuestions($('#content'));
-UI.setCodeFields("C. PENSIOENEN VAN BUITENLANDSE OORSPRONG (EN DE DESBETREFFENDE KOSTEN).", "");
+UI.setCodeFields("A. PENSIOENEN", "");
