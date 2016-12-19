@@ -297,9 +297,10 @@ function getFields (set, indentLvl, infoCode){
 function addField (code) {
     var row = $("#" + code);
 
-    $('<div class="row fieldRows"><div class="col-sm-8"></div><' +
-        'div class="col-sm-1"><label>' + code + '</label></div><div class="col-sm-2">' +
-        '<input type="number" class="form-control"></div></div>').insertAfter(row);
+    $('<div class="fieldRows indent">' +
+        '<p class="field-label indent"></p>' +
+        '<label class="field-code">' + code + '</label>' +
+        '<input type="number" class="field-input  form-control">').insertAfter(row);
 
 }
 

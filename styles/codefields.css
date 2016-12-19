@@ -1,13 +1,25 @@
 .indent1 {
-    margin-left: 4rem;
+    margin-left: 0;
 }
 
 .indent2 {
-    margin-left: 8rem;
+    margin-left: 32px;
 }
 
 .indent3 {
-    margin-left: 12rem;
+    margin-left: 64px;
+}
+
+p.indent1 {
+    margin-left: 32px;
+}
+
+p.indent2 {
+    margin-left: 64px;
+}
+
+p.indent3 {
+    margin-left: 96px;
 }
 
 .fieldRows {
@@ -16,8 +28,48 @@
     align-items: center;
 }
 
+.fieldRows > * {
+    margin-bottom: 0;
+}
+
 .fieldRows > div > * {
     margin-bottom: 0;
+}
+
+.field-info-button {
+    min-width: 24px;
+    max-width: 24px;
+    margin-right: 8px;
+}
+
+.field-label {
+    flex-grow: 1;
+}
+
+.field-label:first-child {
+    margin-left: 32px;
+}
+
+.field-code {
+    text-align: right;
+    min-width: 50px;
+    max-width: 50px;
+}
+
+.field-input {
+    min-width: 200px;
+    max-width: 200px;
+    margin-left: 8px;
+}
+
+.field-add-button {
+    min-width: 24px;
+    max-width: 24px;
+    margin-left: 8px;
+}
+
+.field-input:last-child {
+    margin-right: 32px;
 }
 
 .btn-round {
@@ -33,7 +85,7 @@
 }
 
 .btn-round span {
-    margin-right: 0rem;
+    margin-right: 0;
 }
 
 .info-button {

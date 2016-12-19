@@ -248,19 +248,25 @@ UI.Content.addFieldSectionC = function() {
 UI.Content.addField = function (title, code, indentLvl, infoCode){
     var content = $('#content');
 
-    var fields = '<div class="row fieldRows" id="'+ code +'">';
-    if(indentLvl == 0)
-        fields += '<div class="col-sm-8"><label class="indent'+ indentLvl + '">' + title +'</label></div>';
-    else
-        fields += '<div class="col-sm-8"><p class="indent'+ indentLvl + '">' + title +'</p></div>';
+    var fields = '<div class="fieldRows indent'+ indentLvl + '" id="'+ code +'">';
 
-    fields += ('<div class="col-sm-1"><label>' + code + '</label></div>' +
-        '<div class="col-sm-2"><input type="number" class="form-control"></div>');
+    if (Math.random() > 0.7) {
+        fields += '<button type="button" class="field-info-button btn btn-primary btn-xs btn-round" onclick="addField('+ code +')"><span class="glyphicon glyphicon-plus"></span></button>'
+    }
+
+    if(indentLvl == 0)
+        fields += '<label class="field-label">' + title +'</label>';
+    else
+        fields += '<p class="field-label indent">' + title +'</p>';
+
+    fields += '<label class="field-code">' + code + '</label><input type="number" class="field-input form-control">';
 
     if(multipleFields.indexOf(code) > -1){
-        fields += '<div class="col-sm-1"><button type="button" class="btn btn-primary btn-xs btn-round" onclick="addField('+ code +')"><span class="glyphicon glyphicon-plus"></span></button></div>'
+        fields += '<button type="button" class="field-add-button btn btn-primary btn-xs btn-round" onclick="addField('+ code +')"><span class="glyphicon glyphicon-plus"></span></button>'
     }
-    fields += '<div></div>';
+
+    fields += '</div>';
+
     content.append(fields);
 };
 
