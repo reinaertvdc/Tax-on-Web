@@ -32,8 +32,18 @@ Session.nextAttachmentId = 1;
 
 // Initialize session properties
 Session.attachments = new Map();
-Session.syncState = Session.SYNC_STATES.SYNCED;
-Session.progress = 0.3;
+Session.syncState = null;
+Session.progress = 0;
+
+// Property for keeping track of the number of open synchronization calls
+Session.syncCounter = 0;
+
+// Start the session
+Session.start = function () {
+    Session.setSyncState(Session.SYNC_STATES.SYNCED);
+    Session.updateProgress();
+    Session.setCurrentStep(1);
+};
 
 // Undo all progress
 Session.reset = function () {
@@ -90,6 +100,21 @@ Session.setSyncState = function (value) {
     UI.setSyncState(value);
 
     return true;
+};
+
+Session.sync = function () {
+    Session.setSyncState(Session.SYNC_STATES.SYNCING);
+
+    Session.syncCounter++;
+    setTimeout(Session.tryCompleteSync, 1200);
+};
+
+Session.tryCompleteSync = function () {
+    Session.syncCounter--;
+
+    if (Session.syncCounter == 0) {
+        Session.setSyncState(Session.SYNC_STATES.SYNCED);
+    }
 };
 
 

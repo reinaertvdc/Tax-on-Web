@@ -726,6 +726,7 @@ function activateErrorModal(content){
 function saveFieldValue(code, value){
     console.log(code);
     fieldValues[code] = value;
+    Session.sync();
 }
 
 function saveSectionCValues() {
