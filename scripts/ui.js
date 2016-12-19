@@ -147,7 +147,7 @@ UI.setupSign = function(content){
 };
 
 UI.setDayCareWizard = function () {
-    UI.setContent(
+    var content =
         '<div class="panel panel-primary">' +
         '<div class="panel-heading">' +
         '<h3 class="panel-title">Aftrekbaar bedrag van de uitgaven voor opvang van kinderen.</h3>' +
@@ -161,19 +161,49 @@ UI.setDayCareWizard = function () {
         '<div class="col-sm-2"><label>Dagtarief</label></div>' +
         '<div class="col-sm-2"><label>Aantal dagen</label></div>' +
         '<div class="col-sm-2"><label>Aftrekbaar bedrag</label></div>' +
-        '<div class="col-sm-2 checkbox-label"><label>jonger dan 3</label></div></div>' +
+        '<div class="col-sm-2 checkbox-label"><label>jonger dan 3</label></div></div>';
 
-        '<div class="row wizard-row">' +
-        '<div class="col-sm-4"><input type="text" class="form-control" ></div>' +
-        '<div class="col-sm-2"><input type="number" class="form-control" oninput="updateResult()" min="0"></div>' +
-        '<div class="col-sm-2"><input type="number" class="form-control" oninput="updateResult()" min="0" step="1"></div>' +
+    if(Object.keys(childrenInfo).length > 0) {
+        var i = 0;
+        for (var key in childrenInfo) {
+            var info = childrenInfo[key];
+            content +=
+                '<div class="row wizard-row" id="'+key+'">' +
+                '<div class="col-sm-4"><input type="text" class="form-control" value="' + info[0] + '" oninput="saveChildInfo(this.parentNode.parentNode)"></div>' +
+                '<div class="col-sm-2"><input type="number" class="form-control" value="' + info[1] + '" oninput="updateResult(); saveChildInfo(this.parentNode.parentNode)" min="0"></div>' +
+                '<div class="col-sm-2"><input type="number" class="form-control" value="' + info[2] + '" oninput="updateResult(); saveChildInfo(this.parentNode.parentNode)" min="0" step="1"></div>' +
+                '<div class="col-sm-2"><input type="number" class="form-control" value="' + info[3] + '" disabled></div>' +
+                '<div class="col-sm-2 checkbox-container"><input type="checkbox" class="wizard-checkbox" onclick="saveChildInfo(this.parentNode.parentNode)" value="" ';
+
+            if(info[4])
+                content += 'checked></div></div>';
+            else
+                content += '></div></div>';
+            i++
+        }
+    }else
+        content +=
+        '<div class="row wizard-row" id="childRow0">' +
+        '<div class="col-sm-4"><input type="text" class="form-control" oninput="saveChildInfo(this.parentNode.parentNode)"></div>' +
+        '<div class="col-sm-2"><input type="number" class="form-control" oninput="updateResult(); saveChildInfo(this.parentNode.parentNode)" min="0"></div>' +
+        '<div class="col-sm-2"><input type="number" class="form-control" oninput="updateResult(); saveChildInfo(this.parentNode.parentNode)" min="0" step="1"></div>' +
         '<div class="col-sm-2"><input type="number" class="form-control" value="0" disabled></div>' +
-        '<div class="col-sm-2 checkbox-container"><input type="checkbox" class="wizard-checkbox" value="" ></div></div>' +
+        '<div class="col-sm-2 checkbox-container"><input type="checkbox" class="wizard-checkbox" onclick="saveChildInfo(this.parentNode.parentNode)" value="" ></div></div>';
+
+    content +=
         '</div><button id="action-button-addChild" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Kind toevoegen</button></form></div>' +
 
         '<div class="panel-footer">' +
-        '<div class="pull-right"><label id="resultLabel">1384</label><input id="result" type="number" class="form-control" oninput="checkDisableWizard(this)" min="0" value="0"></div><div class="clearfix"></div>'+
-    '</div></div>');
+        '<div class="pull-right"><label id="resultLabel">1384</label><input id="result" type="number" class="form-control" oninput="checkDisableWizard(this)" min="0" value="' + result + '"></div><div class="clearfix"></div>'+
+    '</div></div>';
+
+    UI.setContent(content);
+
+    if(Object.keys(childrenInfo).length > 0)
+        $('#result')[0].disabled = true;
+    else if(result > 0)
+        checkDisableWizard($('#result'));
+
 
     $('#action-button-addChild')[0].addEventListener('click', function () {
         UI.Content.addChild();
@@ -218,18 +248,21 @@ UI.Content.setSectionC = function (title, indentLvl, infoCode) {
 
     fields += '<div class="row wizard-row indent'+ indentLvl +'">' +
         '<div class="col-sm-4"><div class="flagstrap select_country" data-input-name="NewBuyer_country" data-selected-country=""></div></div>' +
-        '<div class="col-sm-3"><input type="number" class="form-control"></div>' +
-        '<div class="col-sm-4"><input type="number" class="form-control"></div>' +
+        '<div class="col-sm-3"><input type="number" class="form-control" oninput="saveSectionCValues()"></div>' +
+        '<div class="col-sm-4"><input type="number" class="form-control" oninput="saveSectionCValues()"></div>' +
         '<div class="col-sm-1"><button type="button" class="btn btn-primary btn-xs btn-round" onclick="UI.Content.addFieldSectionC()"><span class="glyphicon glyphicon-plus"></span></button></div></div>';
 
     fields += '</div>';
 
     content.append(fields);
     $(document).ready(function () {
-        $('.select_country').attr('data-selected-country','CN');
-        $('.select_country').flagStrap();
+        $('.select_country').attr('data-selected-country', 'US');
+        $('.select_country').flagStrap({
+            onSelect: function (value) {
+                alert(value);
+            }
+        });
     });
-
 };
 
 /* add new row for country selection in Section C */
@@ -244,8 +277,12 @@ UI.Content.addFieldSectionC = function() {
 
     /* this action is needed to view the country picker*/
     $(document).ready(function () {
-        $('.select_country').attr('data-selected-country','CN');
-        $('.select_country').flagStrap();
+        $('.select_country').attr('data-selected-country', 'US');
+        $('.select_country').flagStrap({
+            onSelect: function (value) {
+                alert(value);
+            }
+        });
     });
 };
 
@@ -268,6 +305,7 @@ UI.Content.addField = function (title, code, indentLvl, infoCode){
 
     fields += '<label class="field-code">' + code + '</label>';
 
+    /* check if there was a value saved for this code */
     if(inputFieldId in fieldValues) {
         fields += '<input type="number" id="'+inputFieldId+'" class="field-input form-control" oninput="saveFieldValue( this.id, this.value)" value="' + fieldValues[inputFieldId] + '">';
     }else{
@@ -361,14 +399,15 @@ UI.setActionButtons = function (value) {
 };
 /* Add a child row in the wizard */
 UI.Content.addChild = function () {
+    numberOfChildren++;
     var wizard = $('#wizard-rows');
     wizard.append(
-        '<div class="row wizard-row">' +
-        '<div class="col-sm-4"><input type="text" class="form-control"></div>' +
-        '<div class="col-sm-2"><input type="number" class="form-control" oninput="updateResult()"></div>' +
-        '<div class="col-sm-2"><input type="number" class="form-control" oninput="updateResult()"></div>' +
+        '<div class="row wizard-row" id="childRow'+numberOfChildren+'">' +
+        '<div class="col-sm-4"><input type="text" class="form-control" oninput="saveChildInfo(this.parentNode.parentNode)"></div>' +
+        '<div class="col-sm-2"><input type="number" class="form-control" oninput="updateResult(); saveChildInfo(this.parentNode.parentNode)" min="0"></div>' +
+        '<div class="col-sm-2"><input type="number" class="form-control" oninput="updateResult(); saveChildInfo(this.parentNode.parentNode)" min="0" step="1"></div>' +
         '<div class="col-sm-2"><input type="number" class="form-control" value="0" disabled></div>' +
-        '<div class="col-sm-2 checkbox-container"><input type="checkbox" class="wizardCheckbox" value=""></div></div>'
+        '<div class="col-sm-2 checkbox-container"><input type="checkbox" class="wizard-checkbox" onclick="saveChildInfo(this.parentNode.parentNode)" value="" ></div></div>'
     );
 };
 
