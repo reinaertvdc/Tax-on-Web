@@ -147,9 +147,8 @@ UI.setupSign = function(content){
 };
 
 UI.setDayCareWizard = function () {
-    var content = $('#content');
-    content.empty();
-    content.append('<div class="panel panel-primary">' +
+    UI.setContent(
+        '<div class="panel panel-primary">' +
         '<div class="panel-heading">' +
         '<h3 class="panel-title">Aftrekbaar bedrag van de uitgaven voor opvang van kinderen.</h3>' +
         '</div><div class="panel-body">' +
@@ -170,7 +169,7 @@ UI.setDayCareWizard = function () {
         '<div class="col-sm-2"><input type="number" class="form-control" oninput="updateResult()" min="0" step="1"></div>' +
         '<div class="col-sm-2"><input type="number" class="form-control" value="0" disabled></div>' +
         '<div class="col-sm-2 checkbox-container"><input type="checkbox" class="wizard-checkbox" value="" ></div></div>' +
-        '</div><button id="action-button-addChild" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Kind toevoegen</button></form></div>' +
+        '</div><button id="action-button-addChild" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Kind toevoegen</button></form></div>' +
 
         '<div class="panel-footer">' +
         '<div class="pull-right"><label id="resultLabel">1384</label><input id="result" type="number" class="form-control" oninput="checkDisableWizard(this)" min="0" value="0"></div><div class="clearfix"></div>'+

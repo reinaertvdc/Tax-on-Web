@@ -12,7 +12,8 @@ Step1.FLOW_ACTIONS = {
 
 Step1.FLOW_TYPES = {
     QUESTION: 'QUESTION',
-    CODE_FIELDS: 'CODE_FIELDS'
+    CODE_FIELDS: 'CODE_FIELDS',
+    WIZARD: 'WIZARD'
 };
 
 // Flow of questions and code fields
@@ -81,6 +82,17 @@ Step1.FLOW = [
             }
         ],
         no: []
+    },
+    {
+        type: Step1.FLOW_TYPES.QUESTION,
+        text: 'Heeft u kinderen die naar de kinderopvang gaan?',
+        yes: [
+            {
+                type: Step1.FLOW_TYPES.WIZARD,
+                method: 'setDayCareWizard'
+            }
+        ],
+        no: []
     }
 ];
 
@@ -112,8 +124,16 @@ Step1.setUpCurrentStep = function () {
 
     if (currentStep.type == Step1.FLOW_TYPES.QUESTION) {
         Step1.setQuestion(currentStep.text);
-    } else {
+    } else if (currentStep.type == Step1.FLOW_TYPES.CODE_FIELDS) {
         Step1.setCodeFields(currentStep.category, currentStep.subcategory);
+    } else if (currentStep.type == Step1.FLOW_TYPES.WIZARD) {
+        window['UI'][currentStep.method]();
+
+        Session.setPossibleActions([
+            ['Step1.traverseFlow(Step1.FLOW_ACTIONS.PREVIOUS);', 'Vorige', Session.ACTION_TYPES.SECONDARY],
+            ['Step1.traverseFlow(Step1.FLOW_ACTIONS.NEXT);', 'Volgende', Session.ACTION_TYPES.PRIMARY],
+            ['Step1.traverseFlow(Step1.FLOW_ACTIONS.SKIP);', 'Overslaan', Session.ACTION_TYPES.SECONDARY]
+        ]);
     }
 };
 
