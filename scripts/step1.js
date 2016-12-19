@@ -356,10 +356,11 @@ var fieldValues = {};
 var numberOfExtraFields = {};
 /* liest of of childrenValues for the wizard */
 var childrenInfo = {};
-
 /* result of the daycarewizard */
 var result = 0;
-
+/* saved sectionValues */
+var sectionCValues = {};
+var numberOfChildren = 1;
 
 var result = 0;
 var currentStep = 1;
@@ -520,7 +521,7 @@ function updateResult() {
             activateErrorModal('<p>U heeft een negatieve waarde ingevoerd. Er kunnen enkel positieve waarden gebruikt worden.</p>');
             return;
         }
-        var re = /^[0-9]+([.,]?[0-9]+)?$/;
+        var re = /^([0-9]+([.,]?[0-9]+)?)?$/;
         /* test if there is only one , or . */
         if(!re.test(value1)){
             childInfo[1].getElementsByTagName("input")[0].value = 0;
@@ -551,8 +552,6 @@ function updateResult() {
         /* put the sum in the aftrekbaar bedrag field */
         childInfo[3].getElementsByTagName("input")[0].value = sum
         result += sum;
-
-        saveChildInfo(childInfo);
     }
 
     /* check if we have to disable or enable the result field */
@@ -566,13 +565,16 @@ function updateResult() {
 
 }
 
-function saveChildInfo(child){
-    var key = child[0].getElementsByTagName("input")[0].value;
+function saveChildInfo(childRow){
+    var child = childRow.childNodes;
+    var key = childRow.id;
+    var name = child[0].getElementsByTagName("input")[0].value;
     var tarief = child[1].getElementsByTagName("input")[0].value;
     var days = child[2].getElementsByTagName("input")[0].value;
     var amount = child[3].getElementsByTagName("input")[0].value;
     var checked = child[4].getElementsByTagName("input")[0].checked;
-    childrenInfo[key] = [tarief, days, amount, checked];
+    console.log(checked);
+    childrenInfo[key] = [name, tarief, days, amount, checked];
 }
 
 /* loops over al the sections and subsection and calls functions or create items that belong to that section/subsection */
@@ -626,7 +628,7 @@ function getFields (set, indentLvl, infoCode){
         }else {
             /* check for section C, section C has a special layout */
             if(set[key] == 0)
-                UI.Content.setSectionC(key, indentLvl, newInfoCode);
+                UI.Content.setSectionC(key, indentLvl, infoCode);
             else
             /* add a row with title, code and field */
                 UI.Content.addField(key, set[key], indentLvl, newInfoCode);
@@ -694,4 +696,8 @@ function activateErrorModal(content){
 function saveFieldValue(code, value){
     console.log(code);
     fieldValues[code] = value;
+}
+
+function saveSectionCValues() {
+
 }

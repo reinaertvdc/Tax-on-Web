@@ -163,25 +163,32 @@ UI.setDayCareWizard = function () {
         '<div class="col-sm-2"><label>Aftrekbaar bedrag</label></div>' +
         '<div class="col-sm-2 checkbox-label"><label>jonger dan 3</label></div></div>';
 
-    if(Object.keys(childrenInfo).length > 0)
+    if(Object.keys(childrenInfo).length > 0) {
+        var i = 0;
         for (var key in childrenInfo) {
             var info = childrenInfo[key];
             content +=
-                '<div class="row wizard-row">' +
-                '<div class="col-sm-4"><input type="text" class="form-control" value="' + key + '" ></div>' +
-                '<div class="col-sm-2"><input type="number" class="form-control" value="' + info[0] + '" oninput="updateResult()" min="0"></div>' +
-                '<div class="col-sm-2"><input type="number" class="form-control" value="' + info[1] + '" oninput="updateResult()" min="0" step="1"></div>' +
-                '<div class="col-sm-2"><input type="number" class="form-control" value="' + info[2] + '" disabled></div>' +
-                '<div class="col-sm-2 checkbox-container"><input type="checkbox" class="wizard-checkbox" value="' + info[3] + '" ></div></div>';
+                '<div class="row wizard-row" id="'+key+'">' +
+                '<div class="col-sm-4"><input type="text" class="form-control" value="' + info[0] + '" oninput="saveChildInfo(this.parentNode.parentNode)"></div>' +
+                '<div class="col-sm-2"><input type="number" class="form-control" value="' + info[1] + '" oninput="updateResult(); saveChildInfo(this.parentNode.parentNode)" min="0"></div>' +
+                '<div class="col-sm-2"><input type="number" class="form-control" value="' + info[2] + '" oninput="updateResult(); saveChildInfo(this.parentNode.parentNode)" min="0" step="1"></div>' +
+                '<div class="col-sm-2"><input type="number" class="form-control" value="' + info[3] + '" disabled></div>' +
+                '<div class="col-sm-2 checkbox-container"><input type="checkbox" class="wizard-checkbox" onclick="saveChildInfo(this.parentNode.parentNode)" value="" ';
+
+            if(info[4])
+                content += 'checked></div></div>';
+            else
+                content += '></div></div>';
+            i++
         }
-    else
+    }else
         content +=
-        '<div class="row wizard-row">' +
-        '<div class="col-sm-4"><input type="text" class="form-control" ></div>' +
-        '<div class="col-sm-2"><input type="number" class="form-control" oninput="updateResult()" min="0"></div>' +
-        '<div class="col-sm-2"><input type="number" class="form-control" oninput="updateResult()" min="0" step="1"></div>' +
+        '<div class="row wizard-row" id="childRow0">' +
+        '<div class="col-sm-4"><input type="text" class="form-control" oninput="saveChildInfo(this.parentNode.parentNode)"></div>' +
+        '<div class="col-sm-2"><input type="number" class="form-control" oninput="updateResult(); saveChildInfo(this.parentNode.parentNode)" min="0"></div>' +
+        '<div class="col-sm-2"><input type="number" class="form-control" oninput="updateResult(); saveChildInfo(this.parentNode.parentNode)" min="0" step="1"></div>' +
         '<div class="col-sm-2"><input type="number" class="form-control" value="0" disabled></div>' +
-        '<div class="col-sm-2 checkbox-container"><input type="checkbox" class="wizard-checkbox" value="" ></div></div>';
+        '<div class="col-sm-2 checkbox-container"><input type="checkbox" class="wizard-checkbox" onclick="saveChildInfo(this.parentNode.parentNode)" value="" ></div></div>';
 
     content +=
         '</div><button id="action-button-addChild" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Kind toevoegen</button></form></div>' +
@@ -241,18 +248,21 @@ UI.Content.setSectionC = function (title, indentLvl, infoCode) {
 
     fields += '<div class="row wizard-row indent'+ indentLvl +'">' +
         '<div class="col-sm-4"><div class="flagstrap select_country" data-input-name="NewBuyer_country" data-selected-country=""></div></div>' +
-        '<div class="col-sm-3"><input type="number" class="form-control"></div>' +
-        '<div class="col-sm-4"><input type="number" class="form-control"></div>' +
+        '<div class="col-sm-3"><input type="number" class="form-control" oninput="saveSectionCValues()"></div>' +
+        '<div class="col-sm-4"><input type="number" class="form-control" oninput="saveSectionCValues()"></div>' +
         '<div class="col-sm-1"><button type="button" class="btn btn-primary btn-xs btn-round" onclick="UI.Content.addFieldSectionC()"><span class="glyphicon glyphicon-plus"></span></button></div></div>';
 
     fields += '</div>';
 
     content.append(fields);
     $(document).ready(function () {
-        $('.select_country').attr('data-selected-country','CN');
-        $('.select_country').flagStrap();
+        $('.select_country').attr('data-selected-country', 'US');
+        $('.select_country').flagStrap({
+            onSelect: function (value) {
+                alert(value);
+            }
+        });
     });
-
 };
 
 /* add new row for country selection in Section C */
@@ -267,8 +277,12 @@ UI.Content.addFieldSectionC = function() {
 
     /* this action is needed to view the country picker*/
     $(document).ready(function () {
-        $('.select_country').attr('data-selected-country','CN');
-        $('.select_country').flagStrap();
+        $('.select_country').attr('data-selected-country', 'US');
+        $('.select_country').flagStrap({
+            onSelect: function (value) {
+                alert(value);
+            }
+        });
     });
 };
 
@@ -385,14 +399,15 @@ UI.setActionButtons = function (value) {
 };
 /* Add a child row in the wizard */
 UI.Content.addChild = function () {
+    numberOfChildren++;
     var wizard = $('#wizard-rows');
     wizard.append(
-        '<div class="row wizard-row">' +
-        '<div class="col-sm-4"><input type="text" class="form-control"></div>' +
-        '<div class="col-sm-2"><input type="number" class="form-control" oninput="updateResult()"></div>' +
-        '<div class="col-sm-2"><input type="number" class="form-control" oninput="updateResult()"></div>' +
+        '<div class="row wizard-row" id="childRow'+numberOfChildren+'">' +
+        '<div class="col-sm-4"><input type="text" class="form-control" oninput="saveChildInfo(this.parentNode.parentNode)"></div>' +
+        '<div class="col-sm-2"><input type="number" class="form-control" oninput="updateResult(); saveChildInfo(this.parentNode.parentNode)" min="0"></div>' +
+        '<div class="col-sm-2"><input type="number" class="form-control" oninput="updateResult(); saveChildInfo(this.parentNode.parentNode)" min="0" step="1"></div>' +
         '<div class="col-sm-2"><input type="number" class="form-control" value="0" disabled></div>' +
-        '<div class="col-sm-2 checkbox-container"><input type="checkbox" class="wizardCheckbox" value=""></div></div>'
+        '<div class="col-sm-2 checkbox-container"><input type="checkbox" class="wizard-checkbox" onclick="saveChildInfo(this.parentNode.parentNode)" value="" ></div></div>'
     );
 };
 
