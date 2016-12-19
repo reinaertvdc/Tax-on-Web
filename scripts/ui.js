@@ -164,7 +164,6 @@ UI.setDayCareWizard = function () {
         '<div class="col-sm-2 checkbox-label"><label>jonger dan 3</label></div></div>';
 
     if(Object.keys(childrenInfo).length > 0) {
-        var i = 0;
         for (var key in childrenInfo) {
             var info = childrenInfo[key];
             content +=
@@ -179,7 +178,6 @@ UI.setDayCareWizard = function () {
                 content += 'checked></div></div>';
             else
                 content += '></div></div>';
-            i++
         }
     }else
         content +=
@@ -246,13 +244,22 @@ UI.Content.setSectionC = function (title, indentLvl, infoCode) {
         '<div class="col-sm-3"><label>Code</label></div>' +
         '<div class="col-sm-4"><label>Bedrag</label></div></div>';
 
-    if(Object.keys(childrenInfo).length > 0) {
+    if(Object.keys(sectionCValues).length > 0) {
         var i = 0;
-        for (var key in childrenInfo) {
-            var info = childrenInfo[key];
+        for (var key in sectionCValues) {
+            var info = sectionCValues[key];
+            fields += '<div class="row wizard-row indent'+ indentLvl +'" id="'+ key +'">' +
+                '<div class="col-sm-4"><div class="flagstrap select_country" data-input-name="NewBuyer_country" data-selected-country="'+info[0]+'"></div></div>' +
+                '<div class="col-sm-3"><input type="number" class="form-control" oninput="saveSectionCValues(this.parentNode.parentNode)" value="'+info[1]+'"></div>' +
+                '<div class="col-sm-4"><input type="number" class="form-control" oninput="saveSectionCValues(this.parentNode.parentNode)" value="'+info[2]+'"></div>';
+            if(i == 0){
+                fields +=  '<div class="col-sm-1"><button type="button" class="btn btn-primary btn-xs btn-round" onclick="UI.Content.addFieldSectionC()"><span class="glyphicon glyphicon-plus"></span></button></div></div>';
+                i++;
+            }
+
         }
     }else{
-        fields += '<div class="row wizard-row indent'+ indentLvl +' id="sectionCRow1">' +
+        fields += '<div class="row wizard-row indent'+ indentLvl +'" id="sectionCRow1">' +
             '<div class="col-sm-4"><div class="flagstrap select_country" data-input-name="NewBuyer_country" data-selected-country="US"></div></div>' +
             '<div class="col-sm-3"><input type="number" class="form-control" oninput="saveSectionCValues(this.parentNode.parentNode)"></div>' +
             '<div class="col-sm-4"><input type="number" class="form-control" oninput="saveSectionCValues(this.parentNode.parentNode)"></div>' +
@@ -263,8 +270,8 @@ UI.Content.setSectionC = function (title, indentLvl, infoCode) {
     content.append(fields);
     $(document).ready(function () {
         $('.select_country').flagStrap({
-            onSelect: function (element) {
-                saveSectionCValues(this.parentNode.parentNode)
+            onSelect: function (value, element) {
+                saveSectionCValues(element.parentNode.parentNode.parentNode)
             }
         });
     });
@@ -276,19 +283,19 @@ UI.Content.setSectionC = function (title, indentLvl, infoCode) {
 /* add new row for country selection in Section C */
 UI.Content.addFieldSectionC = function() {
     var content = $('#sectionc-container');
-    var fields = '<div class="row wizard-row indent'+ 0 +'">' +
-        '<div class="col-sm-4"><div class="flagstrap select_country" data-input-name="NewBuyer_country" data-selected-country=""></div></div>' +
-        '<div class="col-sm-3"><input type="number" class="form-control"></div>' +
-        '<div class="col-sm-4"><input type="number" class="form-control"></div>' +
+    numberOfSectionValues++;
+    var fields = '<div class="row wizard-row" id="sectionCRow' + numberOfSectionValues +'" >' +
+        '<div class="col-sm-4"><div class="flagstrap select_country" data-input-name="NewBuyer_country" data-selected-country="US"></div></div>' +
+        '<div class="col-sm-3"><input type="number" class="form-control" oninput="saveSectionCValues(this.parentNode.parentNode)"></div>' +
+        '<div class="col-sm-4"><input type="number" class="form-control" oninput="saveSectionCValues(this.parentNode.parentNode)"></div>' +
         '</div>';
     content.append(fields);
 
     /* this action is needed to view the country picker*/
     $(document).ready(function () {
-        $('.select_country').attr('data-selected-country', 'US');
         $('.select_country').flagStrap({
-            onSelect: function (value) {
-                alert(value);
+            onSelect: function (value, element) {
+                saveSectionCValues(element.parentNode.parentNode.parentNode)
             }
         });
     });
