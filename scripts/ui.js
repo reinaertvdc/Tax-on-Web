@@ -251,9 +251,11 @@ UI.Content.addFieldSectionC = function() {
 
 /* add question with the right field */
 UI.Content.addField = function (title, code, indentLvl, infoCode){
+    /* number of extra added fields of a specific code */
+    var inputFieldId = code + "-0";
     var content = $('#content');
 
-    var fields = '<div class="fieldRows indent'+ indentLvl + '" id="'+ code +'">';
+    var fields = '<div class="fieldRows indent'+ indentLvl + '" id="row'+ inputFieldId +'">';
 
     if (infoIconCodes.indexOf(infoCode) > -1) {
         fields += '<button type="button" class="field-info-button btn btn-primary btn-xs btn-round" onclick="window.open(\''+ infoURL + infoCode +'\',\'\', \'width=700, height=500\');"><span class="glyphicon glyphicon-info-sign"></span></button>'
@@ -264,7 +266,13 @@ UI.Content.addField = function (title, code, indentLvl, infoCode){
     else
         fields += '<p class="field-label">' + title +'</p>';
 
-    fields += '<label class="field-code">' + code + '</label><input type="number" class="field-input form-control">';
+    fields += '<label class="field-code">' + code + '</label>';
+
+    if(inputFieldId in fieldValues) {
+        fields += '<input type="number" id="'+inputFieldId+'" class="field-input form-control" oninput="saveFieldValue( this.id, this.value)" value="' + fieldValues[inputFieldId] + '">';
+    }else{
+        fields += '<input type="number" id="'+inputFieldId+'" class="field-input form-control" oninput="saveFieldValue( this.id, this.value)" value="">';
+    }
 
     if(multipleFields.indexOf(code) > -1){
         fields += '<button type="button" class="field-add-button btn btn-primary btn-xs btn-round" onclick="addField('+ code +')"><span class="glyphicon glyphicon-plus"></span></button>'
@@ -273,6 +281,9 @@ UI.Content.addField = function (title, code, indentLvl, infoCode){
     fields += '</div>';
 
     content.append(fields);
+
+    /* append all the extra added fields of a code */
+    setAddedFields(code);
 };
 
 UI.Content.setSignButtons = function () {
