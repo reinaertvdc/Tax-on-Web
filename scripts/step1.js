@@ -25,11 +25,12 @@ Step1.DEFAULT_FLOW_WEIGHTS = {
 Step1.ATTACHMENTS_WEIGHT = 5;
 Step1.SIGN_WEIGHT = 3;
 
+
 // Flow of questions and code fields
 Step1.FLOW = [
     {
         type: Step1.FLOW_TYPES.QUESTION,
-        text: 'Bent u werknemer in België, of werkt u voor een werkgever gevestigd in België?',
+        text: 'Ontvangt u pensioen omdat u werknemer bent geweest in België, of omdat u voor een werkgever heeft gewerkt gevestigd in België?',
         yes: [
             {
                 type: Step1.FLOW_TYPES.CODE_FIELDS,
@@ -53,7 +54,7 @@ Step1.FLOW = [
     },
     {
         type: Step1.FLOW_TYPES.QUESTION,
-        text: 'Doet u aan pensioensparen via een daarvoor geopende spaarrekening of spaarverzekering?',
+        text: 'Doet u aan pensioensparen via een daarvoor geopende spaarrekening of spaarverzekering, en heeft u hiervoor reeds een uitkering ontvangen?',
         yes: [
             {
                 type: Step1.FLOW_TYPES.CODE_FIELDS,
@@ -122,6 +123,8 @@ Step1.weightCompleted = 0;
 Step1.run = function () {
     if (Step1.flowQueue == null) {
         Step1.reset();
+    } else if (Step1.flowQueue.length == 0) {
+        Step1.traverseFlow(Step1.FLOW_ACTIONS.PREVIOUS);
     }
 
     Step1.setUpCurrentStep();
@@ -202,7 +205,7 @@ Step1.setUpCurrentStep = function () {
 
 // Traverse the flow, possibly based on the given answer
 Step1.traverseFlow = function (action) {
-    if (Step1.flowQueue.length <= 0) {
+    if (Step1.flowQueue.length <= 0 && action != Step1.FLOW_ACTIONS.PREVIOUS) {
         return false;
     }
 
