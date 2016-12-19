@@ -10,6 +10,12 @@ Step2.run = function () {
     Step2.init();
 };
 
+// Undo all progress in this step
+Step2.reset = function () {
+    Session.clearAttachments();
+    Step2.isCompleted = false;
+};
+
 // Get the estimated amount of work this step requires
 Step2.getWeight = function () {
     return 5;
@@ -44,6 +50,21 @@ Step2.init = function () {
         '</div>';
 
     Session.setContent(headers + list + buttons);
+
+    var attachments = Session.getAttachments();
+    var attachmentsIterator = attachments.entries();
+
+    while (true) {
+        var element = attachmentsIterator.next();
+
+        if (element.done) {
+            break;
+        }
+
+        attachment = element.value;
+
+        Step2.renderAttachment(attachment[0], attachment[1]);
+    }
 
     Session.setPossibleActions([
         ['Session.previousStep();', 'Vorige', Session.ACTION_TYPES.SECONDARY],

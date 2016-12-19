@@ -109,7 +109,7 @@ Step1.FLOW = [
 Step1.flow = JSON.parse(JSON.stringify(Step1.FLOW));
 
 // Queue for keeping track of the steps that still need to be done
-Step1.flowQueue = [];
+Step1.flowQueue = null;
 
 // Properties for keeping track of progress
 Step1.weight = undefined;
@@ -117,11 +117,20 @@ Step1.weightCompleted = 0;
 
 // This method gets called when the session enters this step
 Step1.run = function () {
+    if (Step1.flowQueue == null) {
+        Step1.reset();
+    }
+
+    Step1.setUpCurrentStep();
+};
+
+// Undo all progress in this step
+Step1.reset = function () {
+    Step1.flowQueue = [];
+
     Step1.flow.forEach(function(step) {
         Step1.flowQueue.push(step);
     });
-
-    Step1.setUpCurrentStep();
 };
 
 // Get the estimated amount of work this step requires

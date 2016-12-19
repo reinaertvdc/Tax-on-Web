@@ -10,6 +10,11 @@ Step3.run = function () {
     Step3.init();
 };
 
+// Undo all progress in this step
+Step3.reset = function () {
+    Step3.isCompleted = false;
+};
+
 // Get the estimated amount of work this step requires
 Step3.getWeight = function () {
     return 3;

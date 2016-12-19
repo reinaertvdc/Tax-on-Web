@@ -35,6 +35,15 @@ Session.attachments = new Map();
 Session.syncState = Session.SYNC_STATES.SYNCED;
 Session.progress = 0.3;
 
+// Undo all progress
+Session.reset = function () {
+    Session.STEPS.forEach(function (step) {
+        step.reset();
+    });
+
+    Session.setCurrentStep(1);
+};
+
 // Set the 'actual content' delivered to the user
 Session.setContent = function (value) {
     if (typeof value !== 'string') {
