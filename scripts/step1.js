@@ -111,6 +111,9 @@ Step1.flow = JSON.parse(JSON.stringify(Step1.FLOW));
 // Queue for keeping track of the steps that still need to be done
 Step1.flowQueue = null;
 
+// List of actions that the user has previously taken
+Step1.flowHistory = null;
+
 // Properties for keeping track of progress
 Step1.weight = undefined;
 Step1.weightCompleted = 0;
@@ -127,6 +130,7 @@ Step1.run = function () {
 // Undo all progress in this step
 Step1.reset = function () {
     Step1.flowQueue = [];
+    Step1.flowHistory = [];
 
     Step1.flow.forEach(function(step) {
         Step1.flowQueue.push(step);
@@ -202,24 +206,49 @@ Step1.traverseFlow = function (action) {
 
     if (action == Step1.FLOW_ACTIONS.SKIP) {
         Step1.flowQueue.push(Step1.flowQueue.shift());
+        Step1.flowHistory.push(null);
     } else if (action == Step1.FLOW_ACTIONS.YES) {
         var currentStep = Step1.flowQueue.shift();
 
         if (currentStep.type == Step1.FLOW_TYPES.QUESTION) {
+            Step1.flowHistory.push(currentStep.yes.length);
+
             for (var i = currentStep.yes.length - 1; i >= 0; i--) {
                 Step1.flowQueue.unshift(currentStep.yes[i]);
             }
         }
+
+        Step1.flowHistory.push(currentStep);
     } else if (action == Step1.FLOW_ACTIONS.NO) {
         var currentStep = Step1.flowQueue.shift();
 
         if (currentStep.type == Step1.FLOW_TYPES.QUESTION) {
+            Step1.flowHistory.push(currentStep.no.length);
+
             for (var i = currentStep.no.length - 1; i >= 0; i--) {
                 Step1.flowQueue.unshift(currentStep.no[i]);
             }
         }
+
+        Step1.flowHistory.push(currentStep);
     } else if (action == Step1.FLOW_ACTIONS.NEXT) {
-        Step1.flowQueue.shift();
+        Step1.flowHistory.push(Step1.flowQueue.shift());
+    } else if (action == Step1.FLOW_ACTIONS.PREVIOUS && Step1.flowHistory.length > 0) {
+        var step = Step1.flowHistory.pop();
+
+        if (step === null) {
+            Step1.flowQueue.unshift(Step1.flowQueue.pop());
+        } else {
+            if (step.type == Step1.FLOW_TYPES.QUESTION) {
+                var number = Step1.flowHistory.pop();
+
+                for (var i = 0; i < number; i++) {
+                    Step1.flowQueue.shift();
+                }
+            }
+
+            Step1.flowQueue.unshift(step);
+        }
     }
 
     Step1.setUpCurrentStep();
