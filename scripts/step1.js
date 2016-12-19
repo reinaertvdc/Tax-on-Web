@@ -341,7 +341,8 @@ var fields =
         }
     };
 
-
+var fieldValues = {};
+var numberOfExtraFields = {};
 
 
 var result = 0;
@@ -607,13 +608,50 @@ function getFields (set, indentLvl, infoCode){
 
 /* add an extra input field for a specific code */
 function addField (code) {
-    var row = $("#" + code);
+    var row;
+    var number;
+    var rowId;
+    var id = code + '-';
 
-    $('<div class="fieldRows indent">' +
+    if(code in numberOfExtraFields){
+        number = numberOfExtraFields[code] + 1;
+        numberOfExtraFields[code] += 1;
+    }else {
+        number = 1;
+        numberOfExtraFields[code] = 1;
+    }
+    id += number;
+    rowId = 'row'+code + '-' + (number-1);
+    row = $('#' + rowId);
+    $('<div class="fieldRows" id="row'+id+'">' +
         '<p class="field-label indent"></p>' +
         '<label class="field-code">' + code + '</label>' +
-        '<input type="number" class="field-input  form-control">').insertAfter(row);
+        '<input type="number" id="'+id+'" class="field-input form-control" oninput="saveFieldValue( this.id, this.value)" value=""></div>').insertAfter(row);
 
+}
+
+function setAddedFields(code){
+    if(code in numberOfExtraFields){
+
+        var content = "";
+        var numberOfFields = numberOfExtraFields[code];
+        for(var i = 1; i <= numberOfFields ; i++){
+            var row = $('#row' + code + '-' + (i-1));
+            var inputFieldId = code + '-' + i;
+            content = '<div class="fieldRows" id="row'+inputFieldId+'">' +
+                '<p class="field-label indent"></p>' +
+                '<label class="field-code">' + code + '</label>';
+
+            if(inputFieldId in fieldValues) {
+                content += '<input type="number" id="'+inputFieldId+'" class="field-input form-control" oninput="saveFieldValue( this.id, this.value)" value="' + fieldValues[inputFieldId] + '">';
+            }else{
+                content += '<input type="number" id="'+inputFieldId+'" class="field-input form-control" oninput="saveFieldValue( this.id, this.value)" value="">';
+            }
+            content += '</div>';
+
+            $(content).insertAfter(row);
+        }
+    }
 }
 
 /* toggles the modal and set the right content (error message) */
@@ -622,4 +660,9 @@ function activateErrorModal(content){
     modalContent.empty();
     modalContent.append(content);
     $('#errorModal').modal('toggle');
+}
+
+function saveFieldValue(code, value){
+    console.log(code);
+    fieldValues[code] = value;
 }
