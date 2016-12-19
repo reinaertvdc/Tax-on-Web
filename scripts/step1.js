@@ -389,9 +389,9 @@ var childrenInfo = {};
 var result = 0;
 /* saved sectionValues */
 var sectionCValues = {};
+var numberOfSectionValues = 1;
 var numberOfChildren = 1;
 
-var result = 0;
 var currentStep = 1;
 
 /* Main flow of the tax return */
@@ -602,7 +602,6 @@ function saveChildInfo(childRow){
     var days = child[2].getElementsByTagName("input")[0].value;
     var amount = child[3].getElementsByTagName("input")[0].value;
     var checked = child[4].getElementsByTagName("input")[0].checked;
-    console.log(checked);
     childrenInfo[key] = [name, tarief, days, amount, checked];
 }
 
@@ -689,7 +688,7 @@ function addField (code) {
 
 }
 
-/* Set fields that you already filled in before you skipped the rest to compleet later */
+/* Set fields that you already filled in before you skipped the rest to complete later */
 function setAddedFields(code){
     if(code in numberOfExtraFields){
 
@@ -729,4 +728,19 @@ function saveFieldValue(code, value){
 
 function saveSectionCValues() {
 
+}
+
+function clearAllSavedData(){
+    /* id of inputfields with there value */
+    fieldValues = {};
+    /* list of codes and the number of extra fields */
+    numberOfExtraFields = {};
+    /* liest of of childrenValues for the wizard */
+    childrenInfo = {};
+    /* result of the daycarewizard */
+    result = 0;
+    /* saved sectionValues */
+    sectionCValues = {};
+    numberOfSectionValues = 1;
+    numberOfChildren = 1;
 }

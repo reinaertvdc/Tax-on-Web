@@ -246,23 +246,31 @@ UI.Content.setSectionC = function (title, indentLvl, infoCode) {
         '<div class="col-sm-3"><label>Code</label></div>' +
         '<div class="col-sm-4"><label>Bedrag</label></div></div>';
 
-    fields += '<div class="row wizard-row indent'+ indentLvl +'">' +
-        '<div class="col-sm-4"><div class="flagstrap select_country" data-input-name="NewBuyer_country" data-selected-country=""></div></div>' +
-        '<div class="col-sm-3"><input type="number" class="form-control" oninput="saveSectionCValues()"></div>' +
-        '<div class="col-sm-4"><input type="number" class="form-control" oninput="saveSectionCValues()"></div>' +
-        '<div class="col-sm-1"><button type="button" class="btn btn-primary btn-xs btn-round" onclick="UI.Content.addFieldSectionC()"><span class="glyphicon glyphicon-plus"></span></button></div></div>';
+    if(Object.keys(childrenInfo).length > 0) {
+        var i = 0;
+        for (var key in childrenInfo) {
+            var info = childrenInfo[key];
+        }
+    }else{
+        fields += '<div class="row wizard-row indent'+ indentLvl +' id="sectionCRow1">' +
+            '<div class="col-sm-4"><div class="flagstrap select_country" data-input-name="NewBuyer_country" data-selected-country="US"></div></div>' +
+            '<div class="col-sm-3"><input type="number" class="form-control" oninput="saveSectionCValues(this.parentNode.parentNode)"></div>' +
+            '<div class="col-sm-4"><input type="number" class="form-control" oninput="saveSectionCValues(this.parentNode.parentNode)"></div>' +
+            '<div class="col-sm-1"><button type="button" class="btn btn-primary btn-xs btn-round" onclick="UI.Content.addFieldSectionC()"><span class="glyphicon glyphicon-plus"></span></button></div></div>';
+    }
 
     fields += '</div>';
-
     content.append(fields);
     $(document).ready(function () {
-        $('.select_country').attr('data-selected-country', 'US');
         $('.select_country').flagStrap({
-            onSelect: function (value) {
-                alert(value);
+            onSelect: function (element) {
+                saveSectionCValues(this.parentNode.parentNode)
             }
         });
     });
+
+
+
 };
 
 /* add new row for country selection in Section C */
