@@ -32,8 +32,8 @@ p.indent3 {
     margin-bottom: 0;
 }
 
-.fieldRows > div > * {
-    margin-bottom: 0;
+.indent0 > label {
+    margin-left: 0;
 }
 
 .field-info-button {
