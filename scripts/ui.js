@@ -147,7 +147,7 @@ UI.setupSign = function(content){
 };
 
 UI.setDayCareWizard = function () {
-    UI.setContent(
+    var content =
         '<div class="panel panel-primary">' +
         '<div class="panel-heading">' +
         '<h3 class="panel-title">Aftrekbaar bedrag van de uitgaven voor opvang van kinderen.</h3>' +
@@ -161,19 +161,42 @@ UI.setDayCareWizard = function () {
         '<div class="col-sm-2"><label>Dagtarief</label></div>' +
         '<div class="col-sm-2"><label>Aantal dagen</label></div>' +
         '<div class="col-sm-2"><label>Aftrekbaar bedrag</label></div>' +
-        '<div class="col-sm-2 checkbox-label"><label>jonger dan 3</label></div></div>' +
+        '<div class="col-sm-2 checkbox-label"><label>jonger dan 3</label></div></div>';
 
+    if(Object.keys(childrenInfo).length > 0)
+        for (var key in childrenInfo) {
+            var info = childrenInfo[key];
+            content +=
+                '<div class="row wizard-row">' +
+                '<div class="col-sm-4"><input type="text" class="form-control" value="' + key + '" ></div>' +
+                '<div class="col-sm-2"><input type="number" class="form-control" value="' + info[0] + '" oninput="updateResult()" min="0"></div>' +
+                '<div class="col-sm-2"><input type="number" class="form-control" value="' + info[1] + '" oninput="updateResult()" min="0" step="1"></div>' +
+                '<div class="col-sm-2"><input type="number" class="form-control" value="' + info[2] + '" disabled></div>' +
+                '<div class="col-sm-2 checkbox-container"><input type="checkbox" class="wizard-checkbox" value="' + info[3] + '" ></div></div>';
+        }
+    else
+        content +=
         '<div class="row wizard-row">' +
         '<div class="col-sm-4"><input type="text" class="form-control" ></div>' +
         '<div class="col-sm-2"><input type="number" class="form-control" oninput="updateResult()" min="0"></div>' +
         '<div class="col-sm-2"><input type="number" class="form-control" oninput="updateResult()" min="0" step="1"></div>' +
         '<div class="col-sm-2"><input type="number" class="form-control" value="0" disabled></div>' +
-        '<div class="col-sm-2 checkbox-container"><input type="checkbox" class="wizard-checkbox" value="" ></div></div>' +
+        '<div class="col-sm-2 checkbox-container"><input type="checkbox" class="wizard-checkbox" value="" ></div></div>';
+
+    content +=
         '</div><button id="action-button-addChild" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Kind toevoegen</button></form></div>' +
 
         '<div class="panel-footer">' +
-        '<div class="pull-right"><label id="resultLabel">1384</label><input id="result" type="number" class="form-control" oninput="checkDisableWizard(this)" min="0" value="0"></div><div class="clearfix"></div>'+
-    '</div></div>');
+        '<div class="pull-right"><label id="resultLabel">1384</label><input id="result" type="number" class="form-control" oninput="checkDisableWizard(this)" min="0" value="' + result + '"></div><div class="clearfix"></div>'+
+    '</div></div>';
+
+    UI.setContent(content);
+
+    if(Object.keys(childrenInfo).length > 0)
+        $('#result')[0].disabled = true;
+    else if(result > 0)
+        checkDisableWizard($('#result'));
+
 
     $('#action-button-addChild')[0].addEventListener('click', function () {
         UI.Content.addChild();
@@ -268,6 +291,7 @@ UI.Content.addField = function (title, code, indentLvl, infoCode){
 
     fields += '<label class="field-code">' + code + '</label>';
 
+    /* check if there was a value saved for this code */
     if(inputFieldId in fieldValues) {
         fields += '<input type="number" id="'+inputFieldId+'" class="field-input form-control" oninput="saveFieldValue( this.id, this.value)" value="' + fieldValues[inputFieldId] + '">';
     }else{

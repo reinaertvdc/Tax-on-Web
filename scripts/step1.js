@@ -350,8 +350,15 @@ var fields =
         }
     };
 
+/* id of inputfields with there value */
 var fieldValues = {};
+/* list of codes and the number of extra fields */
 var numberOfExtraFields = {};
+/* liest of of childrenValues for the wizard */
+var childrenInfo = {};
+
+/* result of the daycarewizard */
+var result = 0;
 
 
 var result = 0;
@@ -478,8 +485,9 @@ function checkDisableWizard(element) {
     var children = rows[0].childNodes;
     var disableValue;
 
-    if(element.value != ""){
+    if(element.value != 0){
         disableValue = true;
+        result = element.value;
     }else {
         disableValue = false;
     }
@@ -512,9 +520,9 @@ function updateResult() {
             activateErrorModal('<p>U heeft een negatieve waarde ingevoerd. Er kunnen enkel positieve waarden gebruikt worden.</p>');
             return;
         }
-        var re = /^[0-9]+([.,]?[0-9]+)?$/
+        var re = /^[0-9]+([.,]?[0-9]+)?$/;
         /* test if there is only one , or . */
-        if(re.test(value1)){
+        if(!re.test(value1)){
             childInfo[1].getElementsByTagName("input")[0].value = 0;
             activateErrorModal('<p>U mag enkel een komma of een punt gebruiken de cijfers na de komma aan te geven. Er mogen ook geen spaties aanwezig zijn.</p>');
             return;
@@ -543,6 +551,8 @@ function updateResult() {
         /* put the sum in the aftrekbaar bedrag field */
         childInfo[3].getElementsByTagName("input")[0].value = sum
         result += sum;
+
+        saveChildInfo(childInfo);
     }
 
     /* check if we have to disable or enable the result field */
@@ -554,6 +564,15 @@ function updateResult() {
     /* put result in result field */
     $('#result')[0].value = result;
 
+}
+
+function saveChildInfo(child){
+    var key = child[0].getElementsByTagName("input")[0].value;
+    var tarief = child[1].getElementsByTagName("input")[0].value;
+    var days = child[2].getElementsByTagName("input")[0].value;
+    var amount = child[3].getElementsByTagName("input")[0].value;
+    var checked = child[4].getElementsByTagName("input")[0].checked;
+    childrenInfo[key] = [tarief, days, amount, checked];
 }
 
 /* loops over al the sections and subsection and calls functions or create items that belong to that section/subsection */
@@ -639,6 +658,7 @@ function addField (code) {
 
 }
 
+/* Set fields that you already filled in before you skipped the rest to compleet later */
 function setAddedFields(code){
     if(code in numberOfExtraFields){
 
