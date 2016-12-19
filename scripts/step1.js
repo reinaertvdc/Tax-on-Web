@@ -132,6 +132,8 @@ Step1.reset = function () {
     Step1.flowQueue = [];
     Step1.flowHistory = [];
 
+    clearAllSavedData();
+
     Step1.flow.forEach(function(step) {
         Step1.flowQueue.push(step);
     });
