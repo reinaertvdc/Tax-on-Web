@@ -87,9 +87,6 @@ Step1.FLOW = [
 // Copy of the flow to work with
 Step1.flow = JSON.parse(JSON.stringify(Step1.FLOW));
 
-// Stack for keeping track of the current position in the flow
-Step1.flowStack = [{series: Step1.flow, index: 0}];
-
 // Queue for keeping track of the steps that still need to be done
 Step1.flowQueue = [];
 
@@ -122,7 +119,7 @@ Step1.setUpCurrentStep = function () {
 
 // Traverse the flow, possibly based on the given answer
 Step1.traverseFlow = function (action) {
-    if (Step1.flowStack.length <= 0) {
+    if (Step1.flowQueue.length <= 0) {
         return false;
     }
 
@@ -144,6 +141,8 @@ Step1.traverseFlow = function (action) {
                 Step1.flowQueue.unshift(currentStep.no[i]);
             }
         }
+    } else if (action == Step1.FLOW_ACTIONS.NEXT) {
+        Step1.flowQueue.shift();
     }
 
     Step1.setUpCurrentStep();
@@ -166,7 +165,8 @@ Step1.setCodeFields = function (category, subcategory) {
     UI.setCodeFields(category, subcategory);
 
     Session.setPossibleActions([
-        ['Step1.onActionPrevious();', 'Vorige', Session.ACTION_TYPES.SECONDARY],
+        ['Step1.traverseFlow(Step1.FLOW_ACTIONS.PREVIOUS);', 'Vorige', Session.ACTION_TYPES.SECONDARY],
+        ['Step1.traverseFlow(Step1.FLOW_ACTIONS.NEXT);', 'Volgende', Session.ACTION_TYPES.PRIMARY],
         ['Step1.traverseFlow(Step1.FLOW_ACTIONS.SKIP);', 'Overslaan', Session.ACTION_TYPES.SECONDARY]
     ]);
 };
