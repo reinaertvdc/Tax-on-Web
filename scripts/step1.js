@@ -727,13 +727,18 @@ function activateErrorModal(content){
 }
 
 function saveFieldValue(code, value){
-    console.log(code);
     fieldValues[code] = value;
     Session.sync();
 }
 
-function saveSectionCValues() {
-
+function saveSectionCValues(row) {
+    var values = row.childNodes;
+    var key = row.id;
+    var selected = values[0].getElementsByTagName("select")[0];
+    var flag = selected.options[selected.selectedIndex].value;
+    var code = values[1].getElementsByTagName("input")[0].value;
+    var amount = values[2].getElementsByTagName("input")[0].value;
+    sectionCValues[key] = [flag, code, amount];
 }
 
 function clearAllSavedData(){
