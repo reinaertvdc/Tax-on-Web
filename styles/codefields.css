@@ -1,25 +1,25 @@
 .indent1 {
-    margin-left: 0;
+    margin-left: 32px;
 }
 
 .indent2 {
-    margin-left: 32px;
+    margin-left: 64px;
 }
 
 .indent3 {
-    margin-left: 64px;
+    margin-left: 96px;
 }
 
 p.indent1 {
-    margin-left: 32px;
-}
-
-p.indent2 {
     margin-left: 64px;
 }
 
-p.indent3 {
+p.indent2 {
     margin-left: 96px;
+}
+
+p.indent3 {
+    margin-left: 128px;
 }
 
 .fieldRows {
@@ -44,6 +44,10 @@ p.indent3 {
 
 .field-label {
     flex-grow: 1;
+}
+
+.title{
+    margin-left: 32px;
 }
 
 .field-label:first-child {
@@ -91,4 +95,10 @@ p.indent3 {
 .info-button {
     margin-right: 1rem;
     display: inline-block;
+}
+
+#sectionc-container{
+    margin: 32px 64px;
+    display: flex;
+    flex-direction: column;
 }

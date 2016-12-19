@@ -207,18 +207,23 @@ UI.Content = function () {
 UI.Content.setSectionC = function (title, indentLvl, infoCode) {
     var content = $('#content');
     var fields = '';
-
-    fields += '<label class="indent'+ indentLvl +'">' + title + '</label>';
+    fields = '<div class="fieldRows indent'+ indentLvl + '">';
+    fields += '<button type="button" class="field-info-button btn btn-primary btn-xs btn-round" onclick="window.open(\''+ infoURL + infoCode +'\',\'\', \'width=700, height=500\');"><span class="glyphicon glyphicon-info-sign"></span></button>';
+    fields += '<label class="indent' + indentLvl + '">' + title + '</label>';
+    fields += '</div>';
+    fields += '<div id="sectionc-container">';
     fields += '<div class="row wizard-row indent'+ indentLvl +'">' +
-        '<div class="col-sm-6"><label>Land</label></div>' +
-        '<div class="col-sm-2"><label>Code</label></div>' +
-        '<div class="col-sm-3"><label>Bedrag</label></div></div>';
+        '<div class="col-sm-4"><label>Land</label></div>' +
+        '<div class="col-sm-3"><label>Code</label></div>' +
+        '<div class="col-sm-4"><label>Bedrag</label></div></div>';
 
     fields += '<div class="row wizard-row indent'+ indentLvl +'">' +
-        '<div class="col-sm-6"><div class="flagstrap select_country" data-input-name="NewBuyer_country" data-selected-country=""></div></div>' +
-        '<div class="col-sm-2"><input type="number" class="form-control"></div>' +
+        '<div class="col-sm-4"><div class="flagstrap select_country" data-input-name="NewBuyer_country" data-selected-country=""></div></div>' +
         '<div class="col-sm-3"><input type="number" class="form-control"></div>' +
+        '<div class="col-sm-4"><input type="number" class="form-control"></div>' +
         '<div class="col-sm-1"><button type="button" class="btn btn-primary btn-xs btn-round" onclick="UI.Content.addFieldSectionC()"><span class="glyphicon glyphicon-plus"></span></button></div></div>';
+
+    fields += '</div>';
 
     content.append(fields);
     $(document).ready(function () {
@@ -230,14 +235,15 @@ UI.Content.setSectionC = function (title, indentLvl, infoCode) {
 
 /* add new row for country selection in Section C */
 UI.Content.addFieldSectionC = function() {
-    var content = $('#content');
+    var content = $('#sectionc-container');
     var fields = '<div class="row wizard-row indent'+ 0 +'">' +
-        '<div class="col-sm-6"><div class="flagstrap select_country" data-input-name="NewBuyer_country" data-selected-country=""></div></div>' +
-        '<div class="col-sm-2"><input type="number" class="form-control"></div>' +
+        '<div class="col-sm-4"><div class="flagstrap select_country" data-input-name="NewBuyer_country" data-selected-country=""></div></div>' +
         '<div class="col-sm-3"><input type="number" class="form-control"></div>' +
+        '<div class="col-sm-4"><input type="number" class="form-control"></div>' +
         '</div>';
     content.append(fields);
 
+    /* this action is needed to view the country picker*/
     $(document).ready(function () {
         $('.select_country').attr('data-selected-country','CN');
         $('.select_country').flagStrap();
@@ -250,14 +256,14 @@ UI.Content.addField = function (title, code, indentLvl, infoCode){
 
     var fields = '<div class="fieldRows indent'+ indentLvl + '" id="'+ code +'">';
 
-    if (Math.random() > 0.7) {
-        fields += '<button type="button" class="field-info-button btn btn-primary btn-xs btn-round" onclick="addField('+ code +')"><span class="glyphicon glyphicon-plus"></span></button>'
+    if (infoIconCodes.indexOf(infoCode) > -1) {
+        fields += '<button type="button" class="field-info-button btn btn-primary btn-xs btn-round" onclick="window.open(\''+ infoURL + infoCode +'\',\'\', \'width=700, height=500\');"><span class="glyphicon glyphicon-info-sign"></span></button>'
     }
 
     if(indentLvl == 0)
         fields += '<label class="field-label">' + title +'</label>';
     else
-        fields += '<p class="field-label indent">' + title +'</p>';
+        fields += '<p class="field-label">' + title +'</p>';
 
     fields += '<label class="field-code">' + code + '</label><input type="number" class="field-input form-control">';
 
