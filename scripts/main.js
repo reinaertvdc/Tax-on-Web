@@ -226,7 +226,7 @@ function updateResult() {
         /* get input field of the child */
         var childInfo = children[i].childNodes;
 
-        /* get the dagtarief and aantal dagen values */
+        /* get the 'dagtarief' and 'aantal dagen' values */
         var value1 = childInfo[1].getElementsByTagName("input")[0].value;
         if (value1 < 0) {
             childInfo[1].getElementsByTagName("input")[0].value = 0;
@@ -240,13 +240,16 @@ function updateResult() {
             activateErrorModal('<p>U mag enkel een komma of een punt gebruiken de cijfers na de komma aan te geven. Er mogen ook geen spaties aanwezig zijn.</p>');
             return;
         }
+
         var value2 = childInfo[2].getElementsByTagName("input")[0].value;
+        /* check if there is a negative value */
         if (value2 < 0) {
             childInfo[2].getElementsByTagName("input")[0].value = 0;
             activateErrorModal('<p>U heeft een negatieve waarde ingevoerd. Er kunnen enkel positieve waarden gebruikt worden.</p>');
             return;
         }
 
+        /* check if there is filled an integer values*/
         if (value2 != "" && value2 != parseInt(value2)) {
             childInfo[2].getElementsByTagName("input")[0].value = 0;
             activateErrorModal('<p>U mag enkel gehele getallen opgeven </p>');
@@ -263,6 +266,7 @@ function updateResult() {
         result += sum;
     }
 
+    /* check if we have to disable or enable the result field */
     if(result > 0)
         $('#result')[0].disabled = true;
     else
@@ -273,27 +277,66 @@ function updateResult() {
 
 }
 
+/* loops over al the sections and subsection and calls functions or create items that belong to that section/subsection */
 function getFields (set, indentLvl, infoCode){
     var content = $('#content');
+    /* new code when we enter a new level */
+    var newInfoCode;
+    var newContent;
+    var infoButton;
+
+    /* loop over al the elements that we have to display */
     for (var key in set) {
-        /* check if there is a next niveau */
+        newInfoCode = infoCode;
+        newContent = '<div class="fieldRows indent'+ indentLvl + '">';
+        infoButton = false;
+
+        /* before lvl 2 indent tax on web use codes like _A_1 after that they use codes like _A_1_C2 */
+        if(indentLvl < 2 && set[key] != 0)
+            newInfoCode += "_" + key.charAt(0);
+        else
+            newInfoCode += key.charAt(0);
+
+        /* check if there is a next level */
         if(isNaN(set[key])) {
-            if(indentLvl == 0)
-                content.append('<label class="indent'+ indentLvl +'">' + key + '</label>');
-            else {
-                content.append('<p class="indent' + indentLvl + '">' + key + '</p>');
+
+            /* check if we need to display a info button */
+            if (infoIconCodes.indexOf(newInfoCode) > -1) {
+                infoButton = true;
+                newContent += '<button type="button" class="field-info-button btn btn-primary btn-xs btn-round" onclick="window.open(\''+ infoURL + newInfoCode +'\',\'\', \'width=700, height=500\');"><span class="glyphicon glyphicon-info-sign"></span></button>';
             }
-            /* get next niveau */
-            getFields(set[key], indentLvl + 1, (infoCode + key.charAt(0)));
+
+            /* when the ident level is 0 the title has to be bold */
+            if(indentLvl == 0) {
+                /* if there is a infoButton we don't need the margin of the title class */
+                if(infoButton)
+                    newContent += '<label class="indent' + indentLvl + '">' + key + '</label>';
+                else
+                    newContent += '<label class="indent' + indentLvl + ' title">' + key + '</label>';
+            }else {
+                if(infoButton)
+                    newContent += '<p>' + key + '</p>';
+                else
+                    newContent += '<p class="title">' + key + '</p>';
+            }
+
+            newContent += '</div>';
+            content.append(newContent);
+
+            /* process next level */
+            getFields(set[key], indentLvl + 1, newInfoCode);
         }else {
+            /* check for section C, section C has a special layout */
             if(set[key] == 0)
-                UI.Content.setSectionC(key, indentLvl);
+                UI.Content.setSectionC(key, indentLvl, newInfoCode);
             else
-                UI.Content.addField(key, set[key], indentLvl);
+                /* add a row with title, code and field */
+                UI.Content.addField(key, set[key], indentLvl, newInfoCode);
         }
     }
 }
 
+/* add an extra input field for a specific code */
 function addField (code) {
     var row = $("#" + code);
 
@@ -317,4 +360,4 @@ UI.setSyncState(Session.SYNC_STATES.SYNCED);
 UI.setUserNames(['Erik Tienen', 'Tine van de Meent']);
 UI.setCurrentStep(1);
 //UI.setupQuestions($('#content'));
-UI.setCodeFields("A. PENSIOENEN", "");
+UI.setCodeFields("C. PENSIOENEN VAN BUITENLANDSE OORSPRONG (EN DE DESBETREFFENDE KOSTEN).", "");
