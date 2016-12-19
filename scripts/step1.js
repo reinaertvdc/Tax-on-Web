@@ -16,6 +16,15 @@ Step1.FLOW_TYPES = {
     WIZARD: 'WIZARD'
 };
 
+Step1.DEFAULT_FLOW_WEIGHTS = {
+    'QUESTION': 1,
+    'CODE_FIELDS': 5,
+    'WIZARD': 3
+};
+
+Step1.ATTACHMENTS_WEIGHT = 5;
+Step1.SIGN_WEIGHT = 3;
+
 // Flow of questions and code fields
 Step1.FLOW = [
     {
@@ -102,8 +111,16 @@ Step1.flow = JSON.parse(JSON.stringify(Step1.FLOW));
 // Queue for keeping track of the steps that still need to be done
 Step1.flowQueue = [];
 
+// Properties for keeping track of progress
+Step1.totalFlowWeight = 0;
+Step1.step1Weight = 0;
+Step1.flowWeightCompleted = 0;
+
 // This method gets called when the session enters this step
 Step1.run = function () {
+    Step1.step1Weight = Step1.getWeight(Step1.FLOW);
+    Step1.totalFlowWeight = Step1.step1Weight + Step1.ATTACHMENTS_WEIGHT + Step1.SIGN_WEIGHT;
+
     Step1.flow.forEach(function(step) {
         Step1.flowQueue.push(step);
     });
@@ -111,8 +128,30 @@ Step1.run = function () {
     Step1.setUpCurrentStep();
 };
 
+Step1.getWeight = function (tree) {
+    var weight = 0;
+
+    tree.forEach(function(step) {
+        if ('weight' in step) {
+            weight += step.weight;
+        } else {
+            weight += Step1.DEFAULT_FLOW_WEIGHTS[step.type];
+        }
+
+        if (step.type == Step1.FLOW_TYPES.QUESTION) {
+            weight += Step1.getWeight(step.yes);
+            weight += Step1.getWeight(step.no);
+        }
+    });
+
+    return weight;
+};
+
 // Set up the current step to enable the user to execute it
 Step1.setUpCurrentStep = function () {
+    Step1.flowWeightCompleted = Step1.step1Weight - Step1.getWeight(Step1.flowQueue);
+    UI.setProgress(Step1.flowWeightCompleted / Step1.totalFlowWeight);
+
     if (Step1.flowQueue.length <= 0) {
         Step1.setQuestion('Klaar!');
         Session.setPossibleActions([]);
