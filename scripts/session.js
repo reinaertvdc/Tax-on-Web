@@ -109,7 +109,7 @@ Session.getCurrentStep = function () {
 };
 
 Session.setCurrentStep = function (value) {
-    if (!Number.isInteger(value) || value <= 0 || value > Session.STEPS.length) {
+    if (!Number.isInteger(value) || value <= 0 || value > Session.STEPS.length + 1) {
         return false;
     }
 
@@ -119,7 +119,14 @@ Session.setCurrentStep = function (value) {
     Session.setContent('');
     Session.setPossibleActions([]);
 
-    Session.STEPS[value - 1].run();
+    if (value == Session.STEPS.length + 1) {
+        Session.setContent('<span class="question">Klaar!</span>');
+        Session.setPossibleActions([]);
+    } else {
+        Session.STEPS[value - 1].run();
+    }
+
+    Session.updateProgress();
 
     return true;
 };
@@ -148,6 +155,18 @@ Session.setProgress = function (value) {
     UI.setProgress(value);
 
     return true;
+};
+
+Session.updateProgress = function () {
+    var weight = 0;
+    var weightCompleted = 0;
+
+    Session.STEPS.forEach(function (step) {
+        weight += step.getWeight();
+        weightCompleted += step.getWeightCompleted();
+    });
+
+    Session.setProgress(weightCompleted / weight);
 };
 
 

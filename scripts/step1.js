@@ -112,15 +112,11 @@ Step1.flow = JSON.parse(JSON.stringify(Step1.FLOW));
 Step1.flowQueue = [];
 
 // Properties for keeping track of progress
-Step1.totalFlowWeight = 0;
-Step1.step1Weight = 0;
-Step1.flowWeightCompleted = 0;
+Step1.weight = undefined;
+Step1.weightCompleted = 0;
 
 // This method gets called when the session enters this step
 Step1.run = function () {
-    Step1.step1Weight = Step1.getWeight(Step1.FLOW);
-    Step1.totalFlowWeight = Step1.step1Weight + Step1.ATTACHMENTS_WEIGHT + Step1.SIGN_WEIGHT;
-
     Step1.flow.forEach(function(step) {
         Step1.flowQueue.push(step);
     });
@@ -128,10 +124,24 @@ Step1.run = function () {
     Step1.setUpCurrentStep();
 };
 
-Step1.getWeight = function (tree) {
+// Get the estimated amount of work this step requires
+Step1.getWeight = function () {
+    if (typeof Step1.weight === 'undefined') {
+        Step1.weight = Step1.getTreeWeight(Step1.FLOW);
+    }
+
+    return Step1.weight;
+};
+
+// Get the estimated amount of work already done in this step
+Step1.getWeightCompleted = function () {
+    return Step1.weightCompleted;
+};
+
+Step1.getTreeWeight = function (value) {
     var weight = 0;
 
-    tree.forEach(function(step) {
+    value.forEach(function(step) {
         if ('weight' in step) {
             weight += step.weight;
         } else {
@@ -139,8 +149,8 @@ Step1.getWeight = function (tree) {
         }
 
         if (step.type == Step1.FLOW_TYPES.QUESTION) {
-            weight += Step1.getWeight(step.yes);
-            weight += Step1.getWeight(step.no);
+            weight += Step1.getTreeWeight(step.yes);
+            weight += Step1.getTreeWeight(step.no);
         }
     });
 
@@ -149,14 +159,13 @@ Step1.getWeight = function (tree) {
 
 // Set up the current step to enable the user to execute it
 Step1.setUpCurrentStep = function () {
-    Step1.flowWeightCompleted = Step1.step1Weight - Step1.getWeight(Step1.flowQueue);
-    UI.setProgress(Step1.flowWeightCompleted / Step1.totalFlowWeight);
+    Step1.weightCompleted = Step1.getWeight() - Step1.getTreeWeight(Step1.flowQueue);
+    Session.updateProgress();
 
     if (Step1.flowQueue.length <= 0) {
-        Step1.setQuestion('Klaar!');
-        Session.setPossibleActions([]);
+        Session.nextStep();
 
-        return false;
+        return true;
     }
 
     currentStep = Step1.flowQueue[0];

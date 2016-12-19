@@ -2,13 +2,32 @@
 function Step2() {
 }
 
+// Indicate whether this step is completed
+Step2.isCompleted = false;
+
 // This method gets called when the session enters this step
 Step2.run = function () {
     Step2.init();
 };
 
+// Get the estimated amount of work this step requires
+Step2.getWeight = function () {
+    return 5;
+};
+
+// Get the estimated amount of work already done in this step
+Step2.getWeightCompleted = function () {
+    if (Step2.isCompleted) {
+        return Step2.getWeight();
+    } else {
+        return 0;
+    }
+};
+
 // Initialize this step
 Step2.init = function () {
+    Step2.isCompleted = false;
+
     var headers =
         '<div id="attachments-headers">' +
         '<label id="attachments-header-name">Bestandsnaam</label>' +
@@ -28,7 +47,7 @@ Step2.init = function () {
 
     Session.setPossibleActions([
         ['Session.previousStep();', 'Vorige', Session.ACTION_TYPES.SECONDARY],
-        ['Session.nextStep();', 'Volgende', Session.ACTION_TYPES.SECONDARY]
+        ['Step2.isCompleted = true; Session.nextStep();', 'Volgende', Session.ACTION_TYPES.SECONDARY]
     ]);
 };
 

@@ -2,13 +2,32 @@
 function Step3() {
 }
 
+// Indicate whether this step is completed
+Step3.isCompleted = false;
+
 // This method gets called when the session enters this step
 Step3.run = function () {
     Step3.init();
 };
 
+// Get the estimated amount of work this step requires
+Step3.getWeight = function () {
+    return 3;
+};
+
+// Get the estimated amount of work already done in this step
+Step3.getWeightCompleted = function () {
+    if (Step3.isCompleted) {
+        return Step3.getWeight();
+    } else {
+        return 0;
+    }
+};
+
 // Initialize this step
 Step3.init = function () {
+    Step3.isCompleted = false;
+
     var remarks =
         '<div class="panel panel-danger">' +
         '<div class="panel-heading"><h3 class="panel-title">Opmerkingen!</h3></div>' +
@@ -48,6 +67,6 @@ Step3.init = function () {
 
     Session.setPossibleActions([
         ['Session.previousStep();', 'Vorige', Session.ACTION_TYPES.SECONDARY],
-        ['', 'Ondertekenen', Session.ACTION_TYPES.SECONDARY]
+        ['Step3.isCompleted = true; Session.nextStep();', 'Ondertekenen', Session.ACTION_TYPES.SECONDARY]
     ]);
 };
