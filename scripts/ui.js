@@ -169,8 +169,8 @@ UI.setDayCareWizard = function () {
             content +=
                 '<div class="row wizard-row" id="'+key+'">' +
                 '<div class="col-sm-4"><input type="text" class="form-control" value="' + info[0] + '" oninput="saveChildInfo(this.parentNode.parentNode)"></div>' +
-                '<div class="col-sm-2"><input type="number" class="form-control" value="' + info[1] + '" oninput="updateResult(); saveChildInfo(this.parentNode.parentNode)" min="0"></div>' +
-                '<div class="col-sm-2"><input type="number" class="form-control" value="' + info[2] + '" oninput="updateResult(); saveChildInfo(this.parentNode.parentNode)" min="0" step="1"></div>' +
+                '<div class="col-sm-2"><input type="text" class="form-control" value="' + info[1] + '" oninput="updateResult(); saveChildInfo(this.parentNode.parentNode); testChildValue1(this)" min="0"></div>' +
+                '<div class="col-sm-2"><input type="number" class="form-control" value="' + info[2] + '" oninput="updateResult(); saveChildInfo(this.parentNode.parentNode); testChildValue2(this)" min="0" step="1"></div>' +
                 '<div class="col-sm-2"><input type="number" class="form-control" value="' + info[3] + '" disabled></div>' +
                 '<div class="col-sm-2 checkbox-container"><input type="checkbox" class="wizard-checkbox" onclick="saveChildInfo(this.parentNode.parentNode)" value="" ';
 
@@ -183,8 +183,8 @@ UI.setDayCareWizard = function () {
         content +=
         '<div class="row wizard-row" id="childRow0">' +
         '<div class="col-sm-4"><input type="text" class="form-control" oninput="saveChildInfo(this.parentNode.parentNode)"></div>' +
-        '<div class="col-sm-2"><input type="number" class="form-control" oninput="updateResult(); saveChildInfo(this.parentNode.parentNode)" min="0"></div>' +
-        '<div class="col-sm-2"><input type="number" class="form-control" oninput="updateResult(); saveChildInfo(this.parentNode.parentNode)" min="0" step="1"></div>' +
+        '<div class="col-sm-2"><input type="text" class="form-control" oninput="updateResult(); saveChildInfo(this.parentNode.parentNode); testChildValue1(this)" min="0"></div>' +
+        '<div class="col-sm-2"><input type="number" class="form-control" oninput="updateResult(); saveChildInfo(this.parentNode.parentNode); testChildValue2(this)" min="0" step="1"></div>' +
         '<div class="col-sm-2"><input type="number" class="form-control" value="0" disabled></div>' +
         '<div class="col-sm-2 checkbox-container"><input type="checkbox" class="wizard-checkbox" onclick="saveChildInfo(this.parentNode.parentNode)" value="" ></div></div>';
 

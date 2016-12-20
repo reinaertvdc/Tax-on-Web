@@ -569,18 +569,23 @@ function updateResult() {
         /* get the 'dagtarief' and 'aantal dagen' values */
         var value1 = "" + childInfo[1].getElementsByTagName("input")[0].value;
         var value2 = childInfo[2].getElementsByTagName("input")[0].value;
-        if(!testWizardValues(value1, value2, childInfo))
+
+        if(value1 != "" &&  value2 != "") {
+            /* max value of dagtarief is 11.20 */
+            if (value1 > 11.20)
+                value1 = 11.20;
+
+            var sum = Number(value1.replace(",", ".")) * value2;
+            console.log(sum);
+            /* put the sum in the aftrekbaar bedrag field */
+            childInfo[3].getElementsByTagName("input")[0].value = sum
+            result += sum;
+        }else {
+            childInfo[3].getElementsByTagName("input")[0].value = 0;
+            result = 0;
+            $('#result')[0].value = result;
             return;
-
-
-        /* max value of dagtarief is 11.20 */
-        if(value1 > 11.20)
-            value1 = 11.20;
-
-        var sum =  value1 * value2;
-        /* put the sum in the aftrekbaar bedrag field */
-        childInfo[3].getElementsByTagName("input")[0].value = sum
-        result += sum;
+        }
     }
 
     /* check if we have to disable or enable the result field */
@@ -594,38 +599,40 @@ function updateResult() {
 
 }
 
-function testWizardValues(value1, value2, childInfo) {
+function testChildValue1(child){
+    var value1 = child.value;
     if (value1 < 0) {
-        childInfo[1].getElementsByTagName("input")[0].value = "";
+        child.value = "";
         activateErrorModal('<p>U heeft een negatieve waarde ingevoerd. Er worden enkel positieve waarden toegelaten.</p>');
-        return false;
+        return;
     }
 
-    var re = /^\d+([\.,]\d+)?$/;
+    var re = /^\d+(,|\.)?(\d+)?$/;
     /* test if there is only one , or . */
-
-    if(!re.test(value1)){
-        childInfo[1].getElementsByTagName("input")[0].value = "";
-        activateErrorModal('<p>U mag enkel een komma of een punt gebruiken om de cijfers na de komma aan te geven. Spaties en andere karakters zijn niet toegelaten</p>');
-        return false;
+    console.log(value1);
+    if(value1 != "" && !re.test(value1)){
+        child.value = "";
+        activateErrorModal('<p>U mag enkel een komma gebruiken om de cijfers na de komma aan te geven. Spaties en andere karakters zijn niet toegelaten</p>');
+        return;
     }
+}
 
-
+function testChildValue2(child){
+    var value2 = child.value;
     /* check if there is a negative value */
     if (value2 < 0) {
-        childInfo[2].getElementsByTagName("input")[0].value = "";
+        child.value = "";
         activateErrorModal('<p>U heeft een negatieve waarde ingevoerd. Er worden enkel positieve waarden toegelaten.</p>');
-        return false;
+        return;
     }
 
     /* check if there is filled an integer values*/
     if (value2 != "" && value2 != parseInt(value2)) {
-        childInfo[2].getElementsByTagName("input")[0].value = "";
+        child.value = "";
         activateErrorModal('<p>U mag enkel gehele getallen opgeven </p>');
-        return false;
+        return;
     }
 
-    return true;
 }
 
 function saveChildInfo(childRow){
