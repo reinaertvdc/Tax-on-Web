@@ -570,12 +570,19 @@ function updateResult() {
         var value1 = "" + childInfo[1].getElementsByTagName("input")[0].value;
         var value2 = childInfo[2].getElementsByTagName("input")[0].value;
 
+        var val;
+        if(value1.indexOf(",") > -1)
+            val = Number(value1.replace(",", "."));
+        else
+            val = Number(value1);
+
         if(value1 != "" &&  value2 != "") {
             /* max value of dagtarief is 11.20 */
-            if (value1 > 11.20)
-                value1 = 11.20;
+            if (val > 11.20)
+                val = 11.20;
 
-            var sum = Number(value1.replace(",", ".")) * value2;
+            var sum = val * value2;
+
             /* put the sum in the aftrekbaar bedrag field */
             childInfo[3].getElementsByTagName("input")[0].value = sum
             result += sum;
