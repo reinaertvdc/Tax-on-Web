@@ -71,10 +71,11 @@ Session.setPossibleActions = function (value) {
         return false;
     }
     value.forEach(function (action) {
-        if (!action.constructor === Array || action.length != 3 ||
+        if (!action.constructor === Array || action.length < 3 || action.length > 4 ||
             typeof action[0] !== 'string' ||
             typeof action[1] !== 'string' ||
-            action[2] in Session.ACTION_TYPES) {
+            action[2] in Session.ACTION_TYPES ||
+            (action.length >= 4 && typeof action[3] !== 'boolean')) {
             return false;
         }
     });
@@ -154,7 +155,7 @@ Session.setCurrentStep = function (value) {
     Session.setPossibleActions([]);
 
     if (value == Session.STEPS.length + 1) {
-        Session.setContent('<span class="question">Klaar!</span>');
+        Session.setContent('<span class="question">Uw aangifte is succesvol ingediend. U kunt nu dit venster sluiten.</span>');
         Session.setPossibleActions([]);
     } else {
         Session.STEPS[value - 1].run();

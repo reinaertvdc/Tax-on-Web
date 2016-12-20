@@ -404,10 +404,11 @@ UI.setActionButtons = function (value) {
         var onclick = button[0];
         var label = button[1];
         var style = 'btn-' + ((button.length >= 3) ? button[2] : 'default');
+        var enabled = button.length >= 4 ? button[3] : true;
 
         actionButtons.append(
             '<span class="col-xs-' + columnsPerButton + '">' +
-            '<button class="btn btn-lg ' + style + '" onclick="' + onclick + '">' + label + '</button>' +
+            '<button class="btn btn-lg ' + style + (enabled ? '' : ' disabled') + '" onclick="' + onclick + '">' + label + '</button>' +
             '</span>'
         );
     });

@@ -53,7 +53,7 @@ Step3.init = function () {
         '</ul></div>' +
         '<div class="panel-footer">' +
         '<div class="checkbox">' +
-        '<label><input type="checkbox" value="">Ik wens mijn aanslagbiljet in de personenbelasting voortaan te ontvangen in mijn internetbankieren via Zoomit.</label>' +
+        '<label><input id="checkbox-zoomit" type="checkbox" value="" onchange="Step3.evaluate();">Ik wens mijn aanslagbiljet in de personenbelasting voortaan te ontvangen in mijn internetbankieren via Zoomit.</label>' +
         '</div></div></div>';
 
     var juridical =
@@ -62,7 +62,7 @@ Step3.init = function () {
         '<div class="panel-body">Gelieve hieronder aan te duiden of u de verantwoordingsstukken die in de bij de aangifte gevoegde toelichting opgenomen zijn, ter beschikking zult houden en hen op vraag van de administratie voor te leggen.</div>' +
         '<div class="panel-footer">' +
         '<div class="checkbox">' +
-        '<label><input type="checkbox" value="">Ik hou de verantwoordingsstukken ter beschikking</label>' +
+        '<label><input id="checkbox-conditions" type="checkbox" value="" onchange="Step3.evaluate();">Ik hou de verantwoordingsstukken ter beschikking</label>' +
         '</div></div></div>';
 
     var download =
@@ -70,8 +70,22 @@ Step3.init = function () {
 
     Session.setContent(remarks + zoomit + juridical + download);
 
-    Session.setPossibleActions([
-        ['Session.previousStep();', 'Vorige', Session.ACTION_TYPES.SECONDARY],
-        ['Step3.isCompleted = true; Session.nextStep();', 'Ondertekenen', Session.ACTION_TYPES.SECONDARY]
-    ]);
+    Step3.evaluate();
+};
+
+Step3.evaluate = function () {
+    var acceptZoomit = $('#checkbox-zoomit').is(':checked');
+    var acceptConditions = $('#checkbox-conditions').is(':checked');
+
+    if (acceptConditions) {
+        Session.setPossibleActions([
+            ['Session.previousStep();', 'Vorige', Session.ACTION_TYPES.SECONDARY],
+            ['Step3.isCompleted = true; Session.nextStep();', 'Ondertekenen', Session.ACTION_TYPES.SECONDARY]
+        ]);
+    } else {
+        Session.setPossibleActions([
+            ['Session.previousStep();', 'Vorige', Session.ACTION_TYPES.SECONDARY],
+            ['', 'Ondertekenen', Session.ACTION_TYPES.SECONDARY, false]
+        ]);
+    }
 };
