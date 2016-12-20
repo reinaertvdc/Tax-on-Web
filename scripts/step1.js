@@ -196,9 +196,9 @@ Step1.setUpCurrentStep = function () {
         window['UI'][currentStep.method]();
 
         Session.setPossibleActions([
-            ['Step1.traverseFlow(Step1.FLOW_ACTIONS.PREVIOUS);', 'Vorige', Session.ACTION_TYPES.SECONDARY],
+            Step1.getPreviousButton(),
             ['Step1.traverseFlow(Step1.FLOW_ACTIONS.NEXT);', 'Volgende', Session.ACTION_TYPES.PRIMARY],
-            ['Step1.traverseFlow(Step1.FLOW_ACTIONS.SKIP);', 'Overslaan', Session.ACTION_TYPES.SECONDARY]
+            Step1.getSkipButton()
         ]);
     }
 };
@@ -264,10 +264,10 @@ Step1.setQuestion = function (value) {
     Session.setContent('<span class="question">' + value + '</span>');
 
     Session.setPossibleActions([
-        ['Step1.traverseFlow(Step1.FLOW_ACTIONS.PREVIOUS);', 'Vorige', Session.ACTION_TYPES.SECONDARY],
+        Step1.getPreviousButton(),
         ['Step1.traverseFlow(Step1.FLOW_ACTIONS.YES);', 'Ja', Session.ACTION_TYPES.PRIMARY],
         ['Step1.traverseFlow(Step1.FLOW_ACTIONS.NO);', 'Nee', Session.ACTION_TYPES.PRIMARY],
-        ['Step1.traverseFlow(Step1.FLOW_ACTIONS.SKIP);', 'Overslaan', Session.ACTION_TYPES.SECONDARY]
+        Step1.getSkipButton()
     ]);
 };
 
@@ -276,11 +276,29 @@ Step1.setCodeFields = function (category, subcategory) {
     UI.setCodeFields(category, subcategory);
 
     Session.setPossibleActions([
-        ['Step1.traverseFlow(Step1.FLOW_ACTIONS.PREVIOUS);', 'Vorige', Session.ACTION_TYPES.SECONDARY],
+        Step1.getPreviousButton(),
         ['Step1.traverseFlow(Step1.FLOW_ACTIONS.NEXT);', 'Volgende', Session.ACTION_TYPES.PRIMARY],
-        ['Step1.traverseFlow(Step1.FLOW_ACTIONS.SKIP);', 'Overslaan', Session.ACTION_TYPES.SECONDARY]
+        Step1.getSkipButton()
     ]);
 };
+
+Step1.getPreviousButton = function () {
+    if (Step1.flowHistory.length > 0) {
+        return ['Step1.traverseFlow(Step1.FLOW_ACTIONS.PREVIOUS);', 'Vorige', Session.ACTION_TYPES.SECONDARY];
+    } else {
+        return ['', 'Vorige', Session.ACTION_TYPES.SECONDARY, false];
+    }
+};
+
+Step1.getSkipButton = function () {
+    if (Step1.flowQueue.length > 1) {
+        return ['Step1.traverseFlow(Step1.FLOW_ACTIONS.SKIP);', 'Overslaan', Session.ACTION_TYPES.SECONDARY];
+    } else {
+        return ['', 'Overslaan', Session.ACTION_TYPES.SECONDARY, false];
+    }
+};
+
+
 
 
 
