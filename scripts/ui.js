@@ -169,8 +169,8 @@ UI.setDayCareWizard = function () {
             content +=
                 '<div class="row wizard-row" id="'+key+'">' +
                 '<div class="col-sm-4"><input type="text" class="form-control" value="' + info[0] + '" oninput="saveChildInfo(this.parentNode.parentNode)"></div>' +
-                '<div class="col-sm-2"><input type="text" class="form-control" value="' + info[1] + '" oninput="updateResult(); saveChildInfo(this.parentNode.parentNode); testChildValue1(this)" min="0"></div>' +
-                '<div class="col-sm-2"><input type="number" class="form-control" value="' + info[2] + '" oninput="updateResult(); saveChildInfo(this.parentNode.parentNode); testChildValue2(this)" min="0" step="1"></div>' +
+                '<div class="col-sm-2"><input type="text" class="form-control" value="' + info[1] + '" oninput="updateResult(); saveChildInfo(this.parentNode.parentNode); testOnPositiveDouble(this)" min="0"></div>' +
+                '<div class="col-sm-2"><input type="number" class="form-control" value="' + info[2] + '" oninput="updateResult(); saveChildInfo(this.parentNode.parentNode); testOnPositiveInteger(this)" min="0" step="1"></div>' +
                 '<div class="col-sm-2"><input type="number" class="form-control" value="' + info[3] + '" disabled></div>' +
                 '<div class="col-sm-2 checkbox-container"><input type="checkbox" class="wizard-checkbox" onclick="saveChildInfo(this.parentNode.parentNode)" value="" ';
 
@@ -183,8 +183,8 @@ UI.setDayCareWizard = function () {
         content +=
         '<div class="row wizard-row" id="childRow0">' +
         '<div class="col-sm-4"><input type="text" class="form-control" oninput="saveChildInfo(this.parentNode.parentNode)"></div>' +
-        '<div class="col-sm-2"><input type="text" class="form-control" oninput="updateResult(); saveChildInfo(this.parentNode.parentNode); testChildValue1(this)" min="0"></div>' +
-        '<div class="col-sm-2"><input type="number" class="form-control" oninput="updateResult(); saveChildInfo(this.parentNode.parentNode); testChildValue2(this)" min="0" step="1"></div>' +
+        '<div class="col-sm-2"><input type="text" class="form-control" oninput="updateResult(); saveChildInfo(this.parentNode.parentNode); testOnPositiveDouble(this)" min="0"></div>' +
+        '<div class="col-sm-2"><input type="number" class="form-control" oninput="updateResult(); saveChildInfo(this.parentNode.parentNode); testOnPositiveInteger(this)" min="0" step="1"></div>' +
         '<div class="col-sm-2"><input type="number" class="form-control" value="0" disabled></div>' +
         '<div class="col-sm-2 checkbox-container"><input type="checkbox" class="wizard-checkbox" onclick="saveChildInfo(this.parentNode.parentNode)" value="" ></div></div>';
 
@@ -250,8 +250,8 @@ UI.Content.setSectionC = function (title, indentLvl, infoCode) {
             var info = sectionCValues[key];
             fields += '<div class="row wizard-row indent'+ indentLvl +'" id="'+ key +'">' +
                 '<div class="col-sm-4"><div class="flagstrap select_country" data-input-name="NewBuyer_country" data-selected-country="'+info[0]+'"></div></div>' +
-                '<div class="col-sm-3"><input type="number" class="form-control" oninput="saveSectionCValues(this.parentNode.parentNode)" value="'+info[1]+'"></div>' +
-                '<div class="col-sm-4"><input type="number" class="form-control" oninput="saveSectionCValues(this.parentNode.parentNode)" value="'+info[2]+'"></div>';
+                '<div class="col-sm-3"><input type="number" class="form-control" oninput="saveSectionCValues(this.parentNode.parentNode); testOnPositiveInteger(this)" value="'+info[1]+'"></div>' +
+                '<div class="col-sm-4"><input type="text" class="form-control" oninput="saveSectionCValues(this.parentNode.parentNode); testOnPositiveDouble(this)" value="'+info[2]+'"></div>';
             if(i == 0){
                 fields +=  '<div class="col-sm-1"><button type="button" class="btn btn-primary btn-xs btn-round" onclick="UI.Content.addFieldSectionC()"><span class="glyphicon glyphicon-plus"></span></button></div></div>';
                 i++;
@@ -261,8 +261,8 @@ UI.Content.setSectionC = function (title, indentLvl, infoCode) {
     }else{
         fields += '<div class="row wizard-row indent'+ indentLvl +'" id="sectionCRow1">' +
             '<div class="col-sm-4"><div class="flagstrap select_country" data-input-name="NewBuyer_country" data-selected-country="US"></div></div>' +
-            '<div class="col-sm-3"><input type="number" class="form-control" oninput="saveSectionCValues(this.parentNode.parentNode)"></div>' +
-            '<div class="col-sm-4"><input type="number" class="form-control" oninput="saveSectionCValues(this.parentNode.parentNode)"></div>' +
+            '<div class="col-sm-3"><input type="number" class="form-control" oninput="saveSectionCValues(this.parentNode.parentNode); testOnPositiveInteger(this)"></div>' +
+            '<div class="col-sm-4"><input type="text" class="form-control" oninput="saveSectionCValues(this.parentNode.parentNode); testOnPositiveDouble(this)"></div>' +
             '<div class="col-sm-1"><button type="button" class="btn btn-primary btn-xs btn-round" onclick="UI.Content.addFieldSectionC()"><span class="glyphicon glyphicon-plus"></span></button></div></div>';
     }
 
@@ -286,8 +286,8 @@ UI.Content.addFieldSectionC = function() {
     numberOfSectionValues++;
     var fields = '<div class="row wizard-row" id="sectionCRow' + numberOfSectionValues +'" >' +
         '<div class="col-sm-4"><div class="flagstrap select_country" data-input-name="NewBuyer_country" data-selected-country="US"></div></div>' +
-        '<div class="col-sm-3"><input type="number" class="form-control" oninput="saveSectionCValues(this.parentNode.parentNode)"></div>' +
-        '<div class="col-sm-4"><input type="number" class="form-control" oninput="saveSectionCValues(this.parentNode.parentNode)"></div>' +
+        '<div class="col-sm-3"><input type="number" class="form-control" oninput="saveSectionCValues(this.parentNode.parentNode); testOnPositiveInteger(this)"></div>' +
+        '<div class="col-sm-4"><input type="text" class="form-control" oninput="saveSectionCValues(this.parentNode.parentNode); testOnPositiveDouble(this)"></div>' +
         '</div>';
     content.append(fields);
 
@@ -322,9 +322,9 @@ UI.Content.addField = function (title, code, indentLvl, infoCode){
 
     /* check if there was a value saved for this code */
     if(inputFieldId in fieldValues) {
-        fields += '<input type="number" id="'+inputFieldId+'" class="field-input form-control" oninput="saveFieldValue( this.id, this.value)" value="' + fieldValues[inputFieldId] + '">';
+        fields += '<input type="text" id="'+inputFieldId+'" class="field-input form-control" oninput="saveFieldValue( this.id, this.value); testOnPositiveDouble(this)" value="' + fieldValues[inputFieldId] + '">';
     }else{
-        fields += '<input type="number" id="'+inputFieldId+'" class="field-input form-control" oninput="saveFieldValue( this.id, this.value)" value="">';
+        fields += '<input type="text" id="'+inputFieldId+'" class="field-input form-control" oninput="saveFieldValue( this.id, this.value); testOnPositiveDouble(this)" value="">';
     }
 
     if(multipleFields.indexOf(code) > -1){
@@ -420,8 +420,8 @@ UI.Content.addChild = function () {
     wizard.append(
         '<div class="row wizard-row" id="childRow'+numberOfChildren+'">' +
         '<div class="col-sm-4"><input type="text" class="form-control" oninput="saveChildInfo(this.parentNode.parentNode)"></div>' +
-        '<div class="col-sm-2"><input type="number" class="form-control" oninput="updateResult(); saveChildInfo(this.parentNode.parentNode)" min="0"></div>' +
-        '<div class="col-sm-2"><input type="number" class="form-control" oninput="updateResult(); saveChildInfo(this.parentNode.parentNode)" min="0" step="1"></div>' +
+        '<div class="col-sm-2"><input type="text" class="form-control" oninput="updateResult(); saveChildInfo(this.parentNode.parentNode); testOnPositiveDouble(this)" min="0"></div>' +
+        '<div class="col-sm-2"><input type="number" class="form-control" oninput="updateResult(); saveChildInfo(this.parentNode.parentNode); testOnPositiveInteger(this)" min="0" step="1"></div>' +
         '<div class="col-sm-2"><input type="number" class="form-control" value="0" disabled></div>' +
         '<div class="col-sm-2 checkbox-container"><input type="checkbox" class="wizard-checkbox" onclick="saveChildInfo(this.parentNode.parentNode)" value="" ></div></div>'
     );

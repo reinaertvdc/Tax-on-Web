@@ -599,7 +599,7 @@ function updateResult() {
 
 }
 
-function testChildValue1(child){
+function testOnPositiveDouble(child){
     var value1 = child.value;
     if (value1 < 0) {
         child.value = "";
@@ -617,7 +617,7 @@ function testChildValue1(child){
     }
 }
 
-function testChildValue2(child){
+function testOnPositiveInteger(child){
     var value2 = child.value;
     /* check if there is a negative value */
     if (value2 < 0) {
@@ -725,7 +725,7 @@ function addField (code) {
     $('<div class="fieldRows" id="row'+id+'">' +
         '<p class="field-label indent"></p>' +
         '<label class="field-code">' + code + '</label>' +
-        '<input type="number" id="'+id+'" class="field-input form-control" oninput="saveFieldValue( this.id, this.value)" value=""></div>').insertAfter(row);
+        '<input type="text" id="'+id+'" class="field-input form-control" oninput="saveFieldValue( this.id, this.value); testOnPositiveDouble(this)" value=""></div>').insertAfter(row);
 
 }
 
@@ -743,9 +743,9 @@ function setAddedFields(code){
                 '<label class="field-code">' + code + '</label>';
 
             if(inputFieldId in fieldValues) {
-                content += '<input type="number" id="'+inputFieldId+'" class="field-input form-control" oninput="saveFieldValue( this.id, this.value)" value="' + fieldValues[inputFieldId] + '">';
+                content += '<input type="text" id="'+inputFieldId+'" class="field-input form-control" oninput="saveFieldValue( this.id, this.value); testOnPositiveDouble(this)" value="' + fieldValues[inputFieldId] + '">';
             }else{
-                content += '<input type="number" id="'+inputFieldId+'" class="field-input form-control" oninput="saveFieldValue( this.id, this.value)" value="">';
+                content += '<input type="text" id="'+inputFieldId+'" class="field-input form-control" oninput="saveFieldValue( this.id, this.value); testOnPositiveDouble(this)" value="">';
             }
             content += '</div>';
 
