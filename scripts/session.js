@@ -42,7 +42,12 @@ Session.syncCounter = 0;
 Session.start = function () {
     Session.setSyncState(Session.SYNC_STATES.SYNCED);
     Session.updateProgress();
-    Session.setCurrentStep(1);
+
+    Session.setContent('<span class="question">Welkom bij de vereenvoudigde Tax-on-Web aangifte.</span><h3 class="text-center" style="margin-top: 32px;">Klik op "Starten" en volg de stappen op het scherm.</h3>');
+
+    Session.setPossibleActions([
+        ['Session.setCurrentStep(1);', 'Starten', Session.ACTION_TYPES.PRIMARY]
+    ]);
 };
 
 // Undo all progress

@@ -66,7 +66,7 @@ Step3.init = function () {
         '</div></div></div>';
 
     var download =
-        '<button class="btn btn-default btn-lg">Aangifte downloaden</button>';
+        '<a href="docs/aangifte.pdf" download><button class="btn btn-default btn-lg btn-info">Aangifte downloaden</button></a>';
 
     Session.setContent(remarks + zoomit + juridical + download);
 
@@ -80,7 +80,7 @@ Step3.evaluate = function () {
     if (acceptConditions) {
         Session.setPossibleActions([
             ['Session.previousStep();', 'Vorige', Session.ACTION_TYPES.SECONDARY],
-            ['Step3.isCompleted = true; Session.nextStep();', 'Ondertekenen', Session.ACTION_TYPES.SECONDARY]
+            ['Step3.isCompleted = true; Session.nextStep();', 'Ondertekenen', Session.ACTION_TYPES.PRIMARY]
         ]);
     } else {
         Session.setPossibleActions([
