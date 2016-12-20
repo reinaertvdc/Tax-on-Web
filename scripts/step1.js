@@ -576,7 +576,6 @@ function updateResult() {
                 value1 = 11.20;
 
             var sum = Number(value1.replace(",", ".")) * value2;
-            console.log(sum);
             /* put the sum in the aftrekbaar bedrag field */
             childInfo[3].getElementsByTagName("input")[0].value = sum
             result += sum;
@@ -609,7 +608,6 @@ function testOnPositiveDouble(child){
 
     var re = /^\d+(,|\.)?(\d+)?$/;
     /* test if there is only one , or . */
-    console.log(value1);
     if(value1 != "" && !re.test(value1)){
         child.value = "";
         activateErrorModal('<p>U mag enkel een komma gebruiken om de cijfers na de komma aan te geven. Spaties en andere karakters zijn niet toegelaten</p>');
