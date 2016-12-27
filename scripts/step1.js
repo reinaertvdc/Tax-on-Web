@@ -551,6 +551,8 @@ function checkDisableWizard(element) {
         childInfo[0].getElementsByTagName("input")[0].disabled = disableValue;
         childInfo[1].getElementsByTagName("input")[0].disabled = disableValue;
         childInfo[2].getElementsByTagName("input")[0].disabled = disableValue;
+        childInfo[4].getElementsByTagName("input")[0].disabled = disableValue;
+        childInfo[5].getElementsByTagName("input")[0].disabled = disableValue;
     }
 }
 
@@ -761,11 +763,25 @@ function setAddedFields(code){
 
 /* toggles the modal and set the right content (error message) */
 function activateErrorModal(content){
+    if (errorModalIsOpen) {
+        return false;
+    }
+
+    errorModalIsOpen = true;
+
+    var errorModal = $('#errorModal');
     var modalContent = $('.modal-body');
     modalContent.empty();
     modalContent.append(content);
-    $('#errorModal').modal('toggle');
+
+    errorModal.on('hidden.bs.modal', function () {
+        errorModalIsOpen = false;
+    });
+
+    errorModal.modal('toggle');
 }
+
+var errorModalIsOpen = false;
 
 function saveFieldValue(code, value){
     fieldValues[code] = value;
