@@ -44,12 +44,12 @@ Step3.init = function () {
 
     var zoomit =
         '<div class="panel panel-primary">' +
-        '<div class="panel-heading"><h3 class="panel-title">Zoomit</h3></div>' +
+        '<div class="panel-heading"><h3 class="panel-title">Zoomit (niet verplicht)</h3></div>' +
         '<div class="panel-body"><ul>' +
-        '<li>Deze gratis dienst is niet verplicht.</li>' +
-        '<li><strong>Indien ik voor Zoomit kies, zal ik mijn papieren aanslagbiljet niet meer ontvangen.</strong></li>' +
-        '<li>Ik bevestig dat ik het internetbankieren gebruik.</li>' +
-        '<li>Ik bevestig tevens dat ik de gebruiksvoorwaarden en de juridische gevolgen met betrekking tot deze keuze, die ik steeds kan raadplegen via de <a href="http://financien.belgium.be/nl/particulieren/belastingaangifte/aanslagbiljet/#q7">website van de FOD Financiën</a>, heb gelezen en aanvaard.</li>' +
+        '<li>Zoomit is een gratis dienst in Internet en Mobile Banking waarmee u uw documenten zoals facturen, creditnota’s en loonbrieven snel en gemakkelijk afhandelt. U beslist zelf wanneer u betaalt en verliest dus minder tijd met uw geldzaken. Daarnaast bent u verlost van uw paperassen en helpt u het milieu een handje.</li>'+
+        '<li>Indien u dus kiest voor zoomit zal u geen papieren aanslagbiljet ontvangen, maar alles ontvangen via e-mail.</li>' +
+        '<li>Door onderstaande checkbox aan te vinken bevestigd u dat u vanaf nu gebruik zal maken van internetbankieren.</li>' +
+        '<li>U bevestigt tevens dat u de gebruiksvoorwaarden en de juridische gevolgen met betrekking tot deze keuze, die u steeds kan raadplegen via de <a href="http://financien.belgium.be/nl/particulieren/belastingaangifte/aanslagbiljet/#q7">website van de FOD Financiën</a>, heb gelezen en aanvaard.</li>' +
         '</ul></div>' +
         '<div class="panel-footer">' +
         '<div class="checkbox">' +
@@ -58,7 +58,7 @@ Step3.init = function () {
 
     var juridical =
         '<div class="panel panel-primary">' +
-        '<div class="panel-heading"><h3 class="panel-title">Verantwoordingsstukken</h3></div>' +
+        '<div class="panel-heading"><h3 class="panel-title">Verantwoordingsstukken (verplicht)</h3></div>' +
         '<div class="panel-body">Gelieve hieronder aan te duiden of u de verantwoordingsstukken die in de bij de aangifte gevoegde toelichting opgenomen zijn, ter beschikking zult houden en hen op vraag van de administratie voor te leggen.</div>' +
         '<div class="panel-footer">' +
         '<div class="checkbox">' +
