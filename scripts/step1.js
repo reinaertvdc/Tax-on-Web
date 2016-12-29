@@ -595,7 +595,6 @@ function updateResult() {
     }
 
     /* check if we have to disable or enable the result field */
-    console.log(result);
     if(result > 0)
         $('#result')[0].disabled = true;
     else
