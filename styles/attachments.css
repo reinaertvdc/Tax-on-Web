@@ -62,3 +62,7 @@
 #attachments-button-remove-all {
     float: right;
 }
+
+#attachment-comment{
+    margin-bottom: 32px;
+}

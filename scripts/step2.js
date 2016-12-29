@@ -34,6 +34,15 @@ Step2.getWeightCompleted = function () {
 Step2.init = function () {
     Step2.isCompleted = false;
 
+    var comment =
+    '<div class="panel panel-primary">' +
+    '<div class="panel-heading"><h3 class="panel-title">Bijlagen</h3></div>' +
+    '<div class="panel-body">'+
+    '<p>U bent niet verplicht om bijlagen toe te voegen.'+
+    'Het is nochtans aan te raden, om bepaalde stukken ervan bij uw aangifte te voegen (detail van de beroepskosten, attesten hypothecaire lening en individuele levensverzekering, ...).</p>'+
+    '<p>Uw Word of Excel-documenten of andere documenten kunt u meesturen als zij worden omgezet in PDF-formaat.</p>'+
+    '<p id="attachment-comment">Het is mogelijk dat u bepaalde bijlagen, toelichtingen of formulieren niet wilt (of niet kunt) toevoegen bij de aangifte. U moet de bewijsstukken evenwel steeds bewaren met het oog op een eventuele vraag van de administratie.</p>';
+
     var headers =
         '<div id="attachments-headers">' +
         '<label id="attachments-header-name">Bestandsnaam</label>' +
@@ -49,7 +58,9 @@ Step2.init = function () {
         '<button id="attachments-button-remove-all" class="btn btn-primary" onclick="Step2.removeAllAttachments();"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>Verwijder alle</button>' +
         '</div>';
 
-    Session.setContent(headers + list + buttons);
+    var closePanel = '</div></div>';
+
+    Session.setContent(comment + headers + list + buttons + closePanel);
 
     var attachments = Session.getAttachments();
     var attachmentsIterator = attachments.entries();
@@ -97,6 +108,8 @@ Step2.addAttachments = function () {
 
         Step2.renderAttachment(id, attachment);
     }
+
+    document.getElementById("input-add-attachment").value = null;
 };
 
 Step2.renderAttachments = function () {
