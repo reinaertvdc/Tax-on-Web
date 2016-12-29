@@ -552,7 +552,7 @@ function checkDisableWizard(element) {
         childInfo[1].getElementsByTagName("input")[0].disabled = disableValue;
         childInfo[2].getElementsByTagName("input")[0].disabled = disableValue;
         childInfo[4].getElementsByTagName("input")[0].disabled = disableValue;
-        childInfo[5].getElementsByTagName("input")[0].disabled = disableValue;
+        document.getElementById("action-button-addChild").disabled = disableValue;
     }
 }
 
@@ -586,17 +586,16 @@ function updateResult() {
             var sum = val * value2;
 
             /* put the sum in the aftrekbaar bedrag field */
-            childInfo[3].getElementsByTagName("input")[0].value = sum
+            childInfo[3].getElementsByTagName("input")[0].value = sum;
             result += sum;
         }else {
             childInfo[3].getElementsByTagName("input")[0].value = 0;
-            result = 0;
             $('#result')[0].value = result;
-            return;
         }
     }
 
     /* check if we have to disable or enable the result field */
+    console.log(result);
     if(result > 0)
         $('#result')[0].disabled = true;
     else
