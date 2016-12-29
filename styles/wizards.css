@@ -4,8 +4,12 @@
     align-items: center;
 }
 
-#action-button-addChild {
-    margin-top: 1rem;
+#action-buttons-wizard{
+    margin-top: 64px;
+}
+
+#wizard-comments{
+    margin-bottom: 32px;
 }
 
 #result {
@@ -51,4 +55,9 @@
 .wizard-checkbox {
     display:inline-block;
 }
+
+#wizard-button-remove-all {
+    float: right;
+}
+
 

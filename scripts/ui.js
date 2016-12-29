@@ -152,9 +152,10 @@ UI.setDayCareWizard = function () {
         '<div class="panel-heading">' +
         '<h3 class="panel-title">Aftrekbaar bedrag van de uitgaven voor opvang van kinderen.</h3>' +
         '</div><div class="panel-body">' +
+            '<div id="wizard-comments">' +
         '<p>- Geef voor elk kind de prijs van de opvang per dag en het aantal dagen in. (Per opvangdag en per kind mag dat bedrag evenwel niet hoger zijn dan 11,20 EUR).</p>' +
         '<p>- Als u het dagtarief niet kent, vul dan het aantal dagen en het betaalde bedrag in.</p>' +
-        '<p>- Verschillende opvangen tijdens dezelfde dag worden als 1 opvangdag gerekend, tel de betaalde bedragen voor deze opvangdag samen.</p>' +
+        '<p>- Verschillende opvangen tijdens dezelfde dag worden als 1 opvangdag gerekend, tel de betaalde bedragen voor deze opvangdag samen.</p></div>' +
         '<div id="wizard-rows">' +
         '<div class="row wizard-row">' +
         '<div class="col-sm-4"><label>Naam en voornaam</label></div>' +
@@ -189,18 +190,20 @@ UI.setDayCareWizard = function () {
         '<div class="col-sm-2 checkbox-container"><input type="checkbox" class="wizard-checkbox" onclick="saveChildInfo(this.parentNode.parentNode)" value="" ></div></div>';
 
     content +=
-        '</div><button id="action-button-addChild" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Kind toevoegen</button></form></div>' +
+        '</div><div id="action-buttons-wizard" ><button id="action-button-addChild" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Kind toevoegen</button></form>' +
+        '<button id="wizard-button-remove-all" class="btn btn-primary" onclick="removeAllchildren()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>Verwijder alle</button></div></div>' +
 
         '<div class="panel-footer">' +
-        '<div class="pull-right"><label id="resultLabel">1384</label><input id="result" type="number" class="form-control" oninput="checkDisableWizard(this)" min="0" value="' + result + '"></div><div class="clearfix"></div>'+
+        '<div class="pull-right"><label id="resultLabel">1384</label><input id="result" type="number" class="form-control" oninput="checkDisableWizard();" min="0" value="' + result + '"></div><div class="clearfix"></div>'+
     '</div></div>';
 
     UI.setContent(content);
 
     if(Object.keys(childrenInfo).length > 0)
         $('#result')[0].disabled = true;
-    else if(result > 0)
-        checkDisableWizard($('#result'));
+    else if(result > 0) {
+        checkDisableWizard();
+    }
 
 
     $('#action-button-addChild')[0].addEventListener('click', function () {

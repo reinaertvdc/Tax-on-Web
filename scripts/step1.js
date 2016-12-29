@@ -532,13 +532,16 @@ function addFile(){
 }
 
 /* when values in the wizard change, check if the result field or the others need to be disabled */
-function checkDisableWizard(element) {
+function checkDisableWizard() {
+    console.log("update");
     /* get all the children*/
     var rows = $('#wizard-rows');
+    var element = $('#result')[0];
     var children = rows[0].childNodes;
     var disableValue;
 
     if(element.value != 0){
+        console.log(element);
         disableValue = true;
         result = element.value;
     }else {
@@ -553,6 +556,7 @@ function checkDisableWizard(element) {
         childInfo[2].getElementsByTagName("input")[0].disabled = disableValue;
         childInfo[4].getElementsByTagName("input")[0].disabled = disableValue;
         document.getElementById("action-button-addChild").disabled = disableValue;
+        document.getElementById("wizard-button-remove-all").disabled = disableValue;
     }
 }
 
@@ -809,4 +813,11 @@ function clearAllSavedData(){
     sectionCValues = {};
     numberOfSectionValues = 1;
     numberOfChildren = 1;
+}
+
+function removeAllchildren(){
+    numberOfChildren = 1;
+    childrenInfo = {};
+    result = 0;
+    UI.setDayCareWizard();
 }
