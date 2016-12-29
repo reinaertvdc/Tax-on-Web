@@ -253,10 +253,11 @@ UI.Content.setSectionC = function (title, indentLvl, infoCode) {
                 '<div class="col-sm-3"><input type="number" class="form-control" oninput="saveSectionCValues(this.parentNode.parentNode); testOnPositiveInteger(this)" value="'+info[1]+'"></div>' +
                 '<div class="col-sm-4"><input type="text" class="form-control" oninput="saveSectionCValues(this.parentNode.parentNode); testOnPositiveDouble(this)" value="'+info[2]+'"></div>';
             if(i == 0){
-                fields +=  '<div class="col-sm-1"><button type="button" class="btn btn-primary btn-xs btn-round" onclick="UI.Content.addFieldSectionC()"><span class="glyphicon glyphicon-plus"></span></button></div></div>';
+                fields +=  '<div class="col-sm-1"><button type="button" class="btn btn-primary btn-xs btn-round" onclick="UI.Content.addFieldSectionC()"><span class="glyphicon glyphicon-plus"></span></button></div>';
                 i++;
             }
 
+            fields += "</div>";
         }
     }else{
         fields += '<div class="row wizard-row indent'+ indentLvl +'" id="sectionCRow1">' +
