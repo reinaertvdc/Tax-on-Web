@@ -42,6 +42,15 @@ p.indent3 {
     margin-right: 8px;
 }
 
+.field-info-button .glyphicon {
+    padding-top: 2px;
+}
+
+.field-add-button .glyphicon {
+    padding-top: 1px;
+    padding-left: 1px;
+}
+
 .field-label {
     flex-grow: 1;
 }

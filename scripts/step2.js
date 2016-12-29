@@ -38,10 +38,9 @@ Step2.init = function () {
     '<div class="panel panel-primary">' +
     '<div class="panel-heading"><h3 class="panel-title">Bijlagen</h3></div>' +
     '<div class="panel-body">'+
-    '<p>U bent niet verplicht om bijlagen toe te voegen.'+
-    'Het is nochtans aan te raden, om bepaalde stukken ervan bij uw aangifte te voegen (detail van de beroepskosten, attesten hypothecaire lening en individuele levensverzekering, ...).</p>'+
-    '<p>Uw Word of Excel-documenten of andere documenten kunt u meesturen als zij worden omgezet in PDF-formaat.</p>'+
-    '<p id="attachment-comment">Het is mogelijk dat u bepaalde bijlagen, toelichtingen of formulieren niet wilt (of niet kunt) toevoegen bij de aangifte. U moet de bewijsstukken evenwel steeds bewaren met het oog op een eventuele vraag van de administratie.</p>';
+    '<p>Hier kunt u eventuele bijlagen toevoegen om uw aangifte te ondersteunen, zoals details van uw beroepskosten, attesten van hypothecaire leningen en individuele levensverzekering, enzovoort.</p>'+
+    '<p>Enkel PDF-bestanden worden aanvaardt, dus andere formaten, zoals Word- en Excel-documenten, moet u omzetten alvorens u ze kunt meesturen.</p>'+
+    '<p id="attachment-comment">Het is mogelijk dat u bepaalde bijlagen, toelichtingen of formulieren niet wilt (of niet kunt) toevoegen aan uw aangifte. U moet de bewijsstukken evenwel steeds bewaren met het oog op een eventuele vraag van de administratie.</p>';
 
     var headers =
         '<div id="attachments-headers">' +

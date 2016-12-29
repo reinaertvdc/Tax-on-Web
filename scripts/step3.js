@@ -35,7 +35,7 @@ Step3.init = function () {
 
     var remarks =
         '<div class="panel panel-danger">' +
-        '<div class="panel-heading"><h3 class="panel-title">Opmerkingen!</h3></div>' +
+        '<div class="panel-heading"><h3 class="panel-title">Opmerkingen</h3></div>' +
         '<div class="panel-body"><ul>' +
         '<li>Indien u een gezamelijke aangifte indient, moeten uw echtgeno(o)t(e) en uzelf elk de aangifte ondertekenen.</li>' +
         '<li>Als u de aangifte elektronisch indient, verstuur dan geen papieren versie meer.</li>' +
@@ -43,8 +43,8 @@ Step3.init = function () {
         '</div>';
 
     var zoomit =
-        '<div class="panel panel-primary">' +
-        '<div class="panel-heading"><h3 class="panel-title">Zoomit (niet verplicht)</h3></div>' +
+        '<div class="panel panel-info">' +
+        '<div class="panel-heading"><h3 class="panel-title">Zoomit (optioneel)</h3></div>' +
         '<div class="panel-body"><ul>' +
         '<li>Zoomit is een gratis dienst in Internet en Mobile Banking waarmee u uw documenten zoals facturen, creditnota’s en loonbrieven snel en gemakkelijk afhandelt. U beslist zelf wanneer u betaalt en verliest dus minder tijd met uw geldzaken. Daarnaast bent u verlost van uw paperassen en helpt u het milieu een handje.</li>'+
         '<li>Indien u dus kiest voor zoomit zal u geen papieren aanslagbiljet ontvangen, maar alles ontvangen via e-mail.</li>' +
@@ -58,11 +58,11 @@ Step3.init = function () {
 
     var juridical =
         '<div class="panel panel-primary">' +
-        '<div class="panel-heading"><h3 class="panel-title">Verantwoordingsstukken (verplicht)</h3></div>' +
+        '<div class="panel-heading"><h3 class="panel-title">Verantwoordingsstukken</h3></div>' +
         '<div class="panel-body">Gelieve hieronder aan te duiden of u de verantwoordingsstukken die in de bij de aangifte gevoegde toelichting opgenomen zijn, ter beschikking zult houden en hen op vraag van de administratie voor te leggen.</div>' +
         '<div class="panel-footer">' +
         '<div class="checkbox">' +
-        '<label><input id="checkbox-conditions" type="checkbox" value="" onchange="Step3.evaluate();">Ik hou de verantwoordingsstukken ter beschikking</label>' +
+        '<label><input id="checkbox-conditions" type="checkbox" value="" onchange="Step3.evaluate();"><strong style="color: red;">*</strong> Ik hou de verantwoordingsstukken ter beschikking.</label>' +
         '</div></div></div>';
 
     var download =

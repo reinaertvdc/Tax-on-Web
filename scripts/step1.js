@@ -267,7 +267,7 @@ Step1.setQuestion = function (value) {
         Step1.getPreviousButton(),
         ['Step1.traverseFlow(Step1.FLOW_ACTIONS.YES);', 'Ja', Session.ACTION_TYPES.PRIMARY],
         ['Step1.traverseFlow(Step1.FLOW_ACTIONS.NO);', 'Nee', Session.ACTION_TYPES.PRIMARY],
-        Step1.getSkipButton()
+        Step1.getSkipButton(true)
     ]);
 };
 
@@ -290,11 +290,17 @@ Step1.getPreviousButton = function () {
     }
 };
 
-Step1.getSkipButton = function () {
+Step1.getSkipButton = function (isQuestion) {
+    var text = 'Later invullen';
+
+    if (isQuestion) {
+        text = 'Later beantwoorden';
+    }
+
     if (Step1.flowQueue.length > 1) {
-        return ['Step1.traverseFlow(Step1.FLOW_ACTIONS.SKIP);', 'Tijdelijk overslaan', Session.ACTION_TYPES.SECONDARY];
+        return ['Step1.traverseFlow(Step1.FLOW_ACTIONS.SKIP);', text, Session.ACTION_TYPES.SECONDARY];
     } else {
-        return ['', 'Tijdelijk overslaan', Session.ACTION_TYPES.SECONDARY, false];
+        return ['', text, Session.ACTION_TYPES.SECONDARY, false];
     }
 };
 
