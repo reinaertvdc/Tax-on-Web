@@ -292,9 +292,9 @@ Step1.getPreviousButton = function () {
 
 Step1.getSkipButton = function () {
     if (Step1.flowQueue.length > 1) {
-        return ['Step1.traverseFlow(Step1.FLOW_ACTIONS.SKIP);', 'Overslaan', Session.ACTION_TYPES.SECONDARY];
+        return ['Step1.traverseFlow(Step1.FLOW_ACTIONS.SKIP);', 'Tijdelijk overslaan', Session.ACTION_TYPES.SECONDARY];
     } else {
-        return ['', 'Overslaan', Session.ACTION_TYPES.SECONDARY, false];
+        return ['', 'Tijdelijk overslaan', Session.ACTION_TYPES.SECONDARY, false];
     }
 };
 
