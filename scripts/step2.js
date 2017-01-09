@@ -91,8 +91,13 @@ Step2.removeAttachment = function (id) {
 };
 
 Step2.removeAllAttachments = function () {
-    Session.clearAttachments();
-    $('#attachments-list').empty();
+    activateConfirmModal('<p>Bent u zeker dat u alle bijlagen wilt verwijderen?</p>', '<h4 class="modal-title">Bijlagen verwijderen</h4>');
+    $('#confirm-button').unbind('click');
+    $('#confirm-button').on('click', function(e) {
+        $('#confirmModal').modal('hide');
+        Session.clearAttachments();
+        $('#attachments-list').empty();
+    });
 };
 
 Step2.addAttachments = function () {

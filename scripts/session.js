@@ -59,6 +59,15 @@ Session.reset = function () {
     Session.setCurrentStep(1);
 };
 
+Session.startover = function () {
+    activateConfirmModal('<p>Bent u zeker dat u opnieuw wilt beginnen met de aangifte? Alle informatie zal verwijderd worden.</p>', '<h4 class="modal-title">Opnieuw beginnen</h4>');
+    $('#confirm-button').unbind('click');
+    $('#confirm-button').on('click', function(e) {
+        $('#confirmModal').modal('hide');
+        Session.reset();
+    });
+};
+
 // Set the 'actual content' delivered to the user
 Session.setContent = function (value) {
     if (typeof value !== 'string') {

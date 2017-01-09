@@ -539,7 +539,6 @@ function addFile(){
 
 /* when values in the wizard change, check if the result field or the others need to be disabled */
 function checkDisableWizard() {
-    console.log("update");
     /* get all the children*/
     var rows = $('#wizard-rows');
     var element = $('#result')[0];
@@ -547,7 +546,6 @@ function checkDisableWizard() {
     var disableValue;
 
     if(element.value != 0){
-        console.log(element);
         disableValue = true;
         result = element.value;
     }else {
@@ -627,7 +625,7 @@ function testOnPositiveDouble(child){
     /* test if there is only one , or . */
     if(value1 != "" && !re.test(value1)){
         child.value = "";
-        activateErrorModal('<p>U mag enkel een komma gebruiken om de cijfers na de komma aan te geven. Spaties en andere karakters zijn niet toegelaten</p>');
+        activateErrorModal('<p>U mag enkel gebruik maken van cijfers en een punt of komma om cijfers na de komma aan te duiden.</p>');
         return;
     }
 }
@@ -789,7 +787,31 @@ function activateErrorModal(content){
     errorModal.modal('toggle');
 }
 
+/* toggles the modal and set the right content (confirmation) */
+function activateConfirmModal(content, title){
+    if (confirmModalIsOpen) {
+        return false;
+    }
+
+    confirmModalIsOpen = true;
+
+    var confirmModal = $('#confirmModal');
+    var confirmTitle = $('#confirm-title');
+    var modalContent = $('.modal-body');
+    confirmTitle.empty();
+    confirmTitle.append(title);
+    modalContent.empty();
+    modalContent.append(content);
+
+    confirmModal.on('hidden.bs.modal', function () {
+        confirmModalIsOpen = false;
+    });
+
+    confirmModal.modal('toggle');
+}
+
 var errorModalIsOpen = false;
+var confirmModalIsOpen = false;
 
 function saveFieldValue(code, value){
     fieldValues[code] = value;
@@ -822,8 +844,13 @@ function clearAllSavedData(){
 }
 
 function removeAllchildren(){
-    numberOfChildren = 1;
-    childrenInfo = {};
-    result = 0;
-    UI.setDayCareWizard();
+    activateConfirmModal('<p>Bent u zeker dat u alle kinderen wilt verwijderen?</p>', '<h4 class="modal-title">Kinderen verwijderen</h4>');
+    $('#confirm-button').unbind('click');
+    $('#confirm-button').on('click', function(e) {
+        numberOfChildren = 1;
+        childrenInfo = {};
+        result = 0;
+        $('#confirmModal').modal('hide');
+        UI.setDayCareWizard();
+    });
 }

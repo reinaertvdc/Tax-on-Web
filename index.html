@@ -46,6 +46,26 @@
     </div>
 </div>
 
+<!-- confirmation modal -->
+<div class="modal fade modal-primary" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header-primary" id="confirm-title">
+                <h4 class="modal-title"></h4>
+            </div>
+
+            <div class="modal-body">
+                <p></p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Nee</button>
+                <a class="btn btn-primary btn-ok" id="confirm-button">Ja</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Navigation bar -->
 <nav id="navbar" class="navbar navbar-default navbar-static-top"><div class="container-fluid">
 
@@ -72,7 +92,7 @@
 
             <!-- Options menu contents -->
             <ul id="options-menu-content" class="dropdown-menu" aria-labelledby="options-button">
-                <li><a href="#" onclick="Session.reset();"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>Opnieuw beginnen</a></li>
+                <li><a href="#" onclick="Session.startover();"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>Opnieuw beginnen</a></li>
                 <li role="separator" class="divider"></li>
                 <li><a href="#"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>Geavanceerde weergave</a></li>
                 <li><a href="#"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>Help</a></li>
